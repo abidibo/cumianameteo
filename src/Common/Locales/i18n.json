@@ -1,0 +1,16 @@
+{
+  "actions": {
+    "Cancel": "Cancella",
+    "Close": "Chiudi",
+    "Delete": "Elimina",
+    "Save": "Salva",
+    "Search": "Cerca"
+  },
+  "errors": {
+    "UnknownApiError": "Errore API sconosciuto"
+  },
+  "ui": {
+    "AppTitle": "Cumiana Meteo",
+    "Loading": "Caricamento"
+  }
+}

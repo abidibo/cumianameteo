@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "baseUrl": "./src",
+    "paths": {
+      "@Assets/*": ["./Assets/*"],
+      "@Common/*": ["./Common/*"],
+      "@Config": ["./Config/index.js"],
+      "@Config/*": ["./Config/*"],
+      "@Core/*": ["./Core/*"],
+      "@Dashboard/*": ["./Dashboard/*"],
+      "@Theme": ["./Theme/index.js"],
+      "@Theme/*": ["./Theme/*"]
+    }
+  },
+  "exclude": ["dist"],
+  "checkJs": true
+}

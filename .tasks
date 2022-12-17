@@ -1,0 +1,12 @@
+[start]
+# working directory
+cwd=/home/abidibo/Web/www/cumianameteo
+command=yarn start
+output=terminal
+pos=tmux
+
+[deploy]
+cwd=/home/abidibo/Web/www/cumianameteo
+command=source /home/abidibo/.bashrc && nvm use v12.22.12 && yarn deploy:dev
+output=terminal
+pos=tmux
