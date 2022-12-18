@@ -22,7 +22,7 @@ const StartButton = styled(Button)`
   position: absolute !important;
   right: 0;
   width: 50px;
-  z-index: 100000;
+  z-index: 1399;
 `
 
 const FrameImage = styled(UiImage)`
