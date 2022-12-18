@@ -19,7 +19,7 @@ const Modal = ({ isOpen, onClose, overlay, title, submitLabel, onSubmit, childre
         <ModalBody>{children}</ModalBody>
         <ModalFooter>
           <Button variant='ghost' mr={3} onClick={onClose}>
-            {t('actions:Cancel')}
+            {t('actions.Cancel')}
           </Button>
           {onSubmit && (
             <Button colorScheme="green" onClick={onSubmit}>{submitLabel}</Button>

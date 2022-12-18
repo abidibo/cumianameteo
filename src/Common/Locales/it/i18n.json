@@ -11,7 +11,10 @@
   },
   "ui": {
     "AppTitle": "Cumiana Meteo",
+    "English": "Inglese",
+    "Italian": "Italiano",
     "Loading": "Caricamento",
+    "Locale": "Lingua",
     "Settings": "Impostazioni"
   }
 }

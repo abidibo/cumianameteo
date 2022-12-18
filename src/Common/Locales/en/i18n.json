@@ -1,0 +1,20 @@
+{
+  "actions": {
+    "Cancel": "Canecl",
+    "Close": "Close",
+    "Delete": "Delete",
+    "Save": "Save",
+    "Search": "Search"
+  },
+  "errors": {
+    "UnknownApiError": "Unknown API error"
+  },
+  "ui": {
+    "AppTitle": "Cumiana Meteo",
+    "English": "English",
+    "Italian": "Italian",
+    "Loading": "Loading",
+    "Locale": "Language",
+    "Settings": "Settings"
+  }
+}

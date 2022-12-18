@@ -1,0 +1,11 @@
+{
+  "errors": {
+    "FetchWebcamImagesUrlsError": "Fetch images error",
+    "FetchWebcamImagesUrlsErrorDescription": "There was an error retrieving images URLs"
+  },
+  "ui": {
+    "ResumeTimelapse": "Resume",
+    "StartTimelapse": "Start last 24h timelapse",
+    "StopTimelapse": "Stop"
+  }
+}
