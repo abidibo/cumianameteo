@@ -1,4 +1,4 @@
-import { Button, Image as UiImage } from '@chakra-ui/react'
+import { Box, Button, Image as UiImage } from '@chakra-ui/react'
 import Logger from '@Common/Utils/Logger'
 import PropTypes from 'prop-types'
 import { curry } from 'ramda'
@@ -8,8 +8,8 @@ import styled from 'styled-components'
 
 const Container = styled.div``
 
-const Frame = styled.div`
-  border: 5px solid #000;
+const Frame = styled(Box)`
+  border-width: 5px;
   position: relative;
 `
 
@@ -76,7 +76,7 @@ const Timelapse = ({ cover, imagesUrls }) => {
 
   return (
     <Container>
-      <Frame>
+      <Frame borderColor='gray.100'>
         <UiImage src={cover} style={{ zIndex: imagesUrls.length + 10 }} />
         <StartButton isLoading={isLoading} onClick={handleStart}>{t('dashboard:ui.StartTimelapse')}</StartButton>
         {!isLoading && imagesUrls.map((url, index) => {

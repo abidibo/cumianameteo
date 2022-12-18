@@ -30,7 +30,7 @@ const BaseLayout = ({ children }) => {
         {children}
       </GridItem>
       <GridItem bg="gray.100" area="footer" p={2}>
-        <Center>Copyright 2022 - abidibo.net</Center>
+        <Center>Copyright 2022 - Otto srl</Center>
       </GridItem>
     </Grid>
   )

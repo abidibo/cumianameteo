@@ -10,7 +10,9 @@ const Sidebar = () => {
   const location = useLocation()
   return (
     <nav>
-      <Image cursor="pointer" onClick={goHome} src={Logo} alt="logo" width="54px" />
+      <Center padding='0 3px' bg={'gray.900'}>
+        <Image cursor="pointer" onClick={goHome} src={Logo} alt="logo" width="54px" />
+      </Center>
       <Center
         py={'1rem'}
         alignItems={'center'}
