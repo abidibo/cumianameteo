@@ -28,12 +28,12 @@ Map.propTypes = {
 
 const GpsMap = ({ lat, lng }) => {
   return (
-    <div style={{ width: '100%', height: '522.28px' }}>
+    <div style={{ width: '100%', height: '100%', minHeight: '266px' }}>
       <MapContainer
         center={[lat, lng]}
         zoom={12}
         scrollWheelZoom={true}
-        style={{ height: '522.28px', width: '100%' }}
+        style={{ height: '100%', width: '100%' }}
       >
         <Map lat={lat} lng={lng} />
       </MapContainer>
