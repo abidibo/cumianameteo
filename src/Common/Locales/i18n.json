@@ -11,6 +11,7 @@
   },
   "ui": {
     "AppTitle": "Cumiana Meteo",
-    "Loading": "Caricamento"
+    "Loading": "Caricamento",
+    "Settings": "Impostazioni"
   }
 }
