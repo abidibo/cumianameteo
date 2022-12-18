@@ -1,4 +1,8 @@
 {
+  "errors": {
+    "FetchWebcamImagesUrlsError": "Errore richiesta immagini",
+    "FetchWebcamImagesUrlsErrorDescription": "E' stato impossibile recuperare gli URL delle immagini della webcam"
+  },
   "ui": {
     "StartTimelapse": "Avvia timelapse ultime 24h"
   }
