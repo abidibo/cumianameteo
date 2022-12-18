@@ -13,7 +13,7 @@ const Navbar = () => {
   const handleCloseSettings = compose(setSettingsModalIsOpen, F)
 
   return (
-    <Box color="white" display="flex" height="100%" alignItems="center" justifyContent="space-between" px={5}>
+    <Box color="yellow.600" display="flex" height="100%" alignItems="center" justifyContent="space-between" px={5}>
       <Heading fontSize={'1.6rem'}>{t('ui.AppTitle')} - Work in progress</Heading>
       <Box display="flex" gap={1}>
         <IoSettingsOutline size={24} onClick={handleOpenSettings} style={{ cursor: 'pointer' }} />

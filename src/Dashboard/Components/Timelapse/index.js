@@ -9,7 +9,7 @@ import styled from 'styled-components'
 const Container = styled.div``
 
 const Frame = styled(Box)`
-  border-width: 5px;
+  // border-width: 5px;
   position: relative;
 `
 
@@ -78,7 +78,7 @@ const Timelapse = ({ cover, imagesUrls }) => {
     <Container>
       <Frame borderColor='gray.100'>
         <UiImage src={cover} style={{ zIndex: imagesUrls.length + 10 }} />
-        <StartButton isLoading={isLoading} onClick={handleStart}>{t('dashboard:ui.StartTimelapse')}</StartButton>
+        <StartButton colorScheme='orange' isLoading={isLoading} onClick={handleStart}>{t('dashboard:ui.StartTimelapse')}</StartButton>
         {!isLoading && imagesUrls.map((url, index) => {
           const visibility = status === PLAYING && index === currentIndex ? 'visible' : 'hidden'
           const zIndex = index + 1
