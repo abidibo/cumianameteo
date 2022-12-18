@@ -4,6 +4,8 @@
     "FetchWebcamImagesUrlsErrorDescription": "E' stato impossibile recuperare gli URL delle immagini della webcam"
   },
   "ui": {
-    "StartTimelapse": "Avvia timelapse ultime 24h"
+    "ResumeTimelapse": "Riprendi timelapse",
+    "StartTimelapse": "Avvia timelapse ultime 24h",
+    "StopTimelapse": "Stoppa timelapse"
   }
 }

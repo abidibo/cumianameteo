@@ -1,10 +1,12 @@
-import { Box, Button, Image as UiImage } from '@chakra-ui/react'
-import Logger from '@Common/Utils/Logger'
+import { Box, Button, Image as UiImage, Tooltip } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { curry } from 'ramda'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IoPauseOutline, IoPlayOutline } from 'react-icons/io5'
 import styled from 'styled-components'
+
+import Logger from '@Common/Utils/Logger'
 
 const Container = styled.div``
 
@@ -14,12 +16,13 @@ const Frame = styled(Box)`
 `
 
 const StartButton = styled(Button)`
-  bottom: 0.5rem;
+  bottom: 1rem;
   left: 50%;
-  margin-left: -100px;
+  margin-left: -25px;
   position: absolute !important;
   right: 0;
-  width: 200px;
+  width: 50px;
+  z-index: 100000;
 `
 
 const FrameImage = styled(UiImage)`
@@ -35,14 +38,18 @@ const preloadImage = curry((cb, url) => {
 })
 
 const STOPPED = 1
-// const PAUSED = 2
-const PLAYING = 3
+const PLAYING = 2
+const PAUSED = 3
+
+let intervalId
 
 const Timelapse = ({ cover, imagesUrls }) => {
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(true)
   const [status, setStatus] = useState(STOPPED)
   const [currentIndex, setCurrentIndex] = useState(0)
+
+  console.log('STATUS', status) // eslint-disable-line
 
   useEffect(() => {
     let counter = 0
@@ -57,7 +64,7 @@ const Timelapse = ({ cover, imagesUrls }) => {
     if (status === PLAYING) {
       Logger.debug('Timelapse, playing')
       let idx = currentIndex
-      const intervalId = setInterval(() => {
+      intervalId = setInterval(() => {
         const nextIndex = idx++
         if (nextIndex === imagesUrls.length - 1) {
           setStatus(STOPPED)
@@ -67,29 +74,41 @@ const Timelapse = ({ cover, imagesUrls }) => {
         }
       }, 50)
       return () => clearInterval(intervalId)
-    } 
+    } else if (status === STOPPED) {
+      clearInterval(intervalId)
+    }
   }, [status])
 
-  const handleStart = () => setStatus(PLAYING)
+  const handleStatusChange = () => {
+    setStatus(status === STOPPED || status === PAUSED ? PLAYING : PAUSED)
+  }
 
   Logger.info('Timelapse status: ', status)
+  // eslint-disable-next-line no-console
+
+  const tooltipLabels = {
+    [STOPPED]: t('dashboard:ui.StartTimelapse'),
+    [PLAYING]: t('dashboard:ui.StopTimelapse'),
+    [PAUSED]: t('dashboard:ui.ResumeTimelapse'),
+  }
 
   return (
     <Container>
-      <Frame borderColor='gray.100'>
+      <Frame borderColor="gray.100">
         <UiImage src={cover} style={{ zIndex: imagesUrls.length + 10 }} />
-        <StartButton colorScheme='orange' isLoading={isLoading} onClick={handleStart}>{t('dashboard:ui.StartTimelapse')}</StartButton>
-        {!isLoading && imagesUrls.map((url, index) => {
-          const visibility = status === PLAYING && index === currentIndex ? 'visible' : 'hidden'
-          const zIndex = index + 1
-          return (
-            <FrameImage
-              key={index}
-              src={url}
-              style={{ zIndex, visibility }}
-            />
-          )
-        })}
+        <Tooltip label={tooltipLabels[status]}>
+          <StartButton colorScheme="orange" isLoading={isLoading} onClick={handleStatusChange}>
+            {status === STOPPED && <IoPlayOutline size={30} />}
+            {status === PAUSED && <IoPlayOutline size={30} />}
+            {status === PLAYING && <IoPauseOutline size={30} />}
+          </StartButton>
+        </Tooltip>
+        {!isLoading &&
+          imagesUrls.map((url, index) => {
+            const visibility = (status === PLAYING || status === PAUSED) && index === currentIndex ? 'visible' : 'hidden'
+            const zIndex = index + 1
+            return <FrameImage key={index} src={url} style={{ zIndex, visibility }} />
+          })}
       </Frame>
     </Container>
   )
