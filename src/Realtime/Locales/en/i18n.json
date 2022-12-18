@@ -1,0 +1,11 @@
+{
+  "ui": {
+    "Datetime": "Datetime",
+    "Dewpoint": "Dewpoint",
+    "Pressure": "Pressure",
+    "Rain": "Rain",
+    "RelativeHumidity": "Relative humidity",
+    "Temperature": "Temperature",
+    "Wind": "Wind"
+  }
+}

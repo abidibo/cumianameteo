@@ -14,7 +14,7 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery,
   tagTypes: [
-    'WebcamImageUrl',
+    'RealtimeCurrentData',
   ],
   endpoints: () => ({}),
 })

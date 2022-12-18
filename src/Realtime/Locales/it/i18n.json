@@ -1,0 +1,11 @@
+{
+  "ui": {
+    "Datetime": "Data e ora",
+    "Dewpoint": "Punto di rugiada",
+    "Pressure": "Pressione",
+    "Rain": "Precipitazioni",
+    "RelativeHumidity": "Umidità relativa",
+    "Temperature": "Temperatura",
+    "Wind": "Vento"
+  }
+}
