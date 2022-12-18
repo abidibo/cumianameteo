@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <Box color="yellow.600" display="flex" height="100%" alignItems="center" justifyContent="space-between" px={5}>
-      <Heading fontSize={'1.6rem'}>{t('ui.AppTitle')} - Work in progress</Heading>
+      <Heading fontSize={'1.6rem'}>{t('ui.AppTitle')}</Heading>
       <Box display="flex" gap={1}>
         <IoSettingsOutline size={24} onClick={handleOpenSettings} style={{ cursor: 'pointer' }} />
       </Box>

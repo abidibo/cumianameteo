@@ -30,7 +30,10 @@ const BaseLayout = ({ children }) => {
       </GridItem>
       <GridItem bg="black" color="white" area="footer" p={2}>
         <Center>
-          Copyright 2022 abidibo.net <Image style={{ display: 'inline', height: '26px', marginLeft: '.5rem' }} src={Logo} alt="logo" />
+          Copyright 2022 abidibo.net{' '}
+          <a href="https://www.abidibo.net" target="_blank" rel="noreferrer">
+            <Image style={{ display: 'inline', height: '26px', marginLeft: '.5rem' }} src={Logo} alt="logo" />
+          </a>
         </Center>
       </GridItem>
     </Grid>
