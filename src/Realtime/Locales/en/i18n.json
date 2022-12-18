@@ -1,11 +1,13 @@
 {
   "ui": {
+    "Accumulation": "Accumulation",
     "Datetime": "Datetime",
     "Dewpoint": "Dewpoint",
     "Pressure": "Pressure",
     "Rain": "Rain",
     "RelativeHumidity": "Relative humidity",
     "Temperature": "Temperature",
+    "TodayMeasures": "Today measures",
     "Wind": "Wind"
   }
 }

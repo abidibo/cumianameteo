@@ -8,6 +8,7 @@ import BaseLayout from '@Common/Layouts/BaseLayout'
 import Timelapse from '@Dashboard/Components/Timelapse'
 import GpsMap from '@Dashboard/Components/GpsMap'
 import CurrentData from 'Realtime/Components/CurrentData'
+import TodayTemperatureChart from 'Realtime/TodayTemperatureChart'
 
 const DashboardView = () => {
   const { t } = useTranslation()
@@ -47,6 +48,11 @@ const DashboardView = () => {
         <SimpleGrid columns={{ sm: 1, md: 1, lg: 1 }} spacing={2} margin='1rem 0'>
           <Box>
             <CurrentData />
+          </Box>
+        </SimpleGrid>
+        <SimpleGrid columns={{ sm: 1, md: 1, lg: 1 }} spacing={4}>
+          <Box>
+            <TodayTemperatureChart />
           </Box>
         </SimpleGrid>
       </Box>

@@ -8,10 +8,17 @@ const extendedApi = api.injectEndpoints({
       }),
       providesTags: ['RealtimeCurrentData'],
     }),
+    todayData: builder.query({
+      query: () => ({
+        url: `realtime/today/data/cumiana`,
+      }),
+      providesTags: ['RealtimeTodayData'],
+    }),
   }),
   overrideExisting: false,
 })
 
 export const {
   useCurrentDataQuery,
+  useTodayDataQuery,
 } = extendedApi
