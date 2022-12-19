@@ -7,13 +7,13 @@ import { useTranslation } from 'react-i18next'
 import { withLoader } from '@Common/Utils/HOF'
 import config from '@Config'
 
-import { useTodayDataQuery } from './Services/Api'
+import { useTodayDataQuery } from '../Services/Api'
 import ComponentsTheme from '@Theme/Components'
 import { useColorMode } from '@chakra-ui/react'
 
 window.moment = dayjs
 
-const TodayTemperatureChart = () => {
+const TodayChart = () => {
   const { t } = useTranslation()
   const { colorMode } = useColorMode()
   const { data } = useTodayDataQuery()
@@ -62,6 +62,19 @@ const TodayTemperatureChart = () => {
           text: `${t('realtime:ui.Pressure')} (hPa)`,
         },
         opposite: false,
+        gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
+        labels: {
+          style: {
+            color: '#aaa',
+          },
+        },
+      },
+      {
+        title: {
+          text: `${t('realtime:ui.RelativeHumidity')} (%)`,
+        },
+        min: 0,
+        opposite: true,
         gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
         labels: {
           style: {
@@ -123,8 +136,19 @@ const TodayTemperatureChart = () => {
         },
       },
       {
-        name: t('realtime:ui.Rain'),
+        name: t('realtime:ui.RelativeHumidity'),
         yAxis: 2,
+        type: 'spline',
+        data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.relative_humidity)]),
+        dashStyle: 'Dash',
+        zIndex: 3,
+        tooltip: {
+          valueSuffix: 'hPa',
+        },
+      },
+      {
+        name: t('realtime:ui.Rain'),
+        yAxis: 3,
         type: 'column',
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.rain_rate)]),
         zIndex: 1,
@@ -134,7 +158,7 @@ const TodayTemperatureChart = () => {
       },
       {
         name: t('realtime:ui.Accumulation'),
-        yAxis: 2,
+        yAxis: 3,
         type: 'area',
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.rain)]),
         zIndex: 2,
@@ -156,4 +180,4 @@ const TodayTemperatureChart = () => {
   )
 }
 
-export default TodayTemperatureChart
+export default TodayChart

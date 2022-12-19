@@ -17,7 +17,9 @@
     "Light": "Light",
     "Loading": "Loading",
     "Locale": "Language",
+    "Month": "Month",
     "Settings": "Settings",
-    "Theme": "Theme"
+    "Theme": "Theme",
+    "Year": "Year"
   }
 }

@@ -1,16 +1,17 @@
+import config from '@Config';
 import { api } from '@Core/Services/Api';
 
 const extendedApi = api.injectEndpoints({
   endpoints: (builder) => ({
     currentData: builder.query({
       query: () => ({
-        url: `realtime/data/cumiana`,
+        url: `realtime/data/${config.station.slug}`,
       }),
       providesTags: ['RealtimeCurrentData'],
     }),
     todayData: builder.query({
       query: () => ({
-        url: `realtime/today/data/cumiana`,
+        url: `realtime/today/data/${config.station.slug}`,
       }),
       providesTags: ['RealtimeTodayData'],
     }),

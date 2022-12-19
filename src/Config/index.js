@@ -1,4 +1,9 @@
 const config = {
+  station: {
+    slug: 'cumiana',
+    webcamId: 28,
+    webcamBaseUrl: 'https://cumiana.cam.torinometeo.org/24h/28/',
+  },
   logger: {
     // eslint-disable-next-line no-undef
     level: process.env.REACT_APP_LOGGER_LEVEL, // DEBUG, INFO, WARNING, ERROR
