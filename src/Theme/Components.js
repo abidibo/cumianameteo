@@ -2,7 +2,13 @@ const ComponentsTheme = {
   navbar: {
     bg: {
       light: 'gray.200',
-      dark: 'blackAlpha.400',
+      dark: 'blackAlpha.500',
+    }
+  },
+  footer: {
+    bg: {
+      light: 'gray.200',
+      dark: 'blackAlpha.500',
     }
   },
   chart: {
@@ -13,6 +19,14 @@ const ComponentsTheme = {
     gridColor: {
       light: '#ddd',
       dark: '#333',
+    }
+  },
+  panel: {
+    heading: {
+      bg: {
+        light: 'gray.200',
+        dark: 'blackAlpha.400',
+      }
     }
   }
 }

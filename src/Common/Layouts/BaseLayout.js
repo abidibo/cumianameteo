@@ -1,9 +1,10 @@
 // import Sidebar from '@Common/Components/Sidebar'
-import { Center, Grid, GridItem, Image } from '@chakra-ui/react'
+import { Center, Grid, GridItem, Image, useColorMode } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
 import Logo from '@Assets/Images/abidibo.png'
 import Navbar from '@Common/Components/Navbar'
+import ComponentsTheme from '@Theme/Components'
 
 /**
  * The base layout (almost) all views extend
@@ -12,6 +13,8 @@ import Navbar from '@Common/Components/Navbar'
  * @param {Boolean} props.withFab - if the view contains a fab button, anm additional bottom padding is added
  */
 const BaseLayout = ({ children }) => {
+  const { colorMode } = useColorMode()
+
   return (
     <Grid
       minH="100vh"
@@ -25,11 +28,16 @@ const BaseLayout = ({ children }) => {
       <GridItem area="header">
         <Navbar />
       </GridItem>
-      <GridItem area="main">
-        {children}
-      </GridItem>
-      <GridItem area="footer" p={2}>
-        <Center>
+      <GridItem area="main">{children}</GridItem>
+      <GridItem
+        bg={ComponentsTheme.footer.bg[colorMode]}
+        area="footer"
+        padding={0}
+        alignItems="center"
+        justifyContent={'center'}
+        display="flex"
+      >
+        <Center margin={0}>
           Copyright 2022 abidibo.net{' '}
           <a href="https://www.abidibo.net" target="_blank" rel="noreferrer">
             <Image style={{ display: 'inline', height: '26px', marginLeft: '.5rem' }} src={Logo} alt="logo" />

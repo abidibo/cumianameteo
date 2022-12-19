@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import { curry } from 'ramda'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { IoPauseOutline, IoPlayOutline } from 'react-icons/io5'
+import { IoCameraOutline, IoPauseOutline, IoPlayOutline } from 'react-icons/io5'
 import styled from 'styled-components'
 
 import Logger from '@Common/Utils/Logger'
-
-const Container = styled.div``
+import Panel from '@Common/Components/Panel'
 
 const Frame = styled(Box)`
   // border-width: 5px;
@@ -45,8 +44,6 @@ const Timelapse = ({ cover, imagesUrls }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [status, setStatus] = useState(STOPPED)
   const [currentIndex, setCurrentIndex] = useState(0)
-
-  console.log('STATUS', status) // eslint-disable-line
 
   useEffect(() => {
     let counter = 0
@@ -90,7 +87,7 @@ const Timelapse = ({ cover, imagesUrls }) => {
   }
 
   return (
-    <Container>
+    <Panel title={t('dashboard:ui.WebcamPanelTitle')} icon={<IoCameraOutline />}>
       <Frame borderColor="gray.100">
         <UiImage src={cover} style={{ zIndex: imagesUrls.length + 10 }} />
         <Tooltip label={tooltipLabels[status]}>
@@ -108,7 +105,7 @@ const Timelapse = ({ cover, imagesUrls }) => {
             return <FrameImage key={index} src={url} style={{ zIndex, visibility }} />
           })}
       </Frame>
-    </Container>
+    </Panel>
   )
 }
 

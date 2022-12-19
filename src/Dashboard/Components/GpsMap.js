@@ -1,5 +1,7 @@
+import Panel from '@Common/Components/Panel'
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
+import { IoMapOutline } from 'react-icons/io5'
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
 
 const Map = ({ lat, lng }) => {
@@ -32,18 +34,18 @@ Map.propTypes = {
   lng: PropTypes.number,
 }
 
-const GpsMap = ({ lat, lng }) => {
+const GpsMap = ({ lat, lng, alt }) => {
   return (
-    <div style={{ width: '100%', height: '100%', minHeight: '266px' }}>
+    <Panel boxProps={{style: { width: '100%', height: '100%', minHeight: '266px' }}} title={`(${lat}, ${lng}) - ${alt}m`} icon={<IoMapOutline />}>
       <MapContainer
         center={[lat, lng]}
         zoom={11}
         scrollWheelZoom={false}
-        style={{ height: '100%', width: '100%' }}
+        style={{ height: 'calc(100% - 40px)', width: '100%' }}
       >
         <Map lat={lat} lng={lng} />
       </MapContainer>
-    </div>
+    </Panel>
   )
 }
 

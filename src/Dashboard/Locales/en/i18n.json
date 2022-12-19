@@ -6,6 +6,7 @@
   "ui": {
     "ResumeTimelapse": "Resume",
     "StartTimelapse": "Start last 24h timelapse",
-    "StopTimelapse": "Stop"
+    "StopTimelapse": "Stop",
+    "WebcamPanelTitle": "Hikvision webcam, south sight"
   }
 }

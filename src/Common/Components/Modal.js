@@ -22,7 +22,7 @@ const Modal = ({ isOpen, onClose, overlay, title, submitLabel, onSubmit, childre
             {t('actions.Cancel')}
           </Button>
           {onSubmit && (
-            <Button colorScheme="green" onClick={onSubmit}>{submitLabel}</Button>
+            <Button colorScheme="orange" onClick={onSubmit}>{submitLabel}</Button>
           )}
         </ModalFooter>
       </ModalContent>

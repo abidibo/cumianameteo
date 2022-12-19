@@ -25,6 +25,7 @@ const TodayTemperatureChart = () => {
       type: 'spline',
       height: '500px',
       backgroundColor: ComponentsTheme.chart.bg[colorMode],
+      spacing: [40, 20, 20, 20],
     },
     colors: config.ui.chartColors,
     title: {
