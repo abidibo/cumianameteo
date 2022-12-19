@@ -17,11 +17,8 @@ const Frame = styled(Box)`
 
 const StartButton = styled(Button)`
   bottom: 1rem;
-  left: 50%;
-  margin-left: -25px;
   position: absolute !important;
-  right: 0;
-  width: 50px;
+  right: 1rem;
   z-index: 1399;
 `
 
@@ -97,10 +94,11 @@ const Timelapse = ({ cover, imagesUrls }) => {
       <Frame borderColor="gray.100">
         <UiImage src={cover} style={{ zIndex: imagesUrls.length + 10 }} />
         <Tooltip label={tooltipLabels[status]}>
-          <StartButton colorScheme="orange" isLoading={isLoading} onClick={handleStatusChange}>
-            {status === STOPPED && <IoPlayOutline size={30} />}
-            {status === PAUSED && <IoPlayOutline size={30} />}
-            {status === PLAYING && <IoPauseOutline size={30} />}
+          <StartButton size='sm' colorScheme="orange" isLoading={isLoading} onClick={handleStatusChange}>
+            {status === STOPPED && <IoPlayOutline size={26} />}
+            {status === PAUSED && <IoPlayOutline size={26} />}
+            {status === PLAYING && <IoPauseOutline size={26} />}
+            {status === STOPPED && tooltipLabels[status]}
           </StartButton>
         </Tooltip>
         {!isLoading &&

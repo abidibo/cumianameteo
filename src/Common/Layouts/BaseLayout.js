@@ -15,20 +15,20 @@ const BaseLayout = ({ children }) => {
   return (
     <Grid
       minH="100vh"
-      templateAreas={`"nav header"
-                  "nav main"
-                  "nav footer"`}
+      templateAreas={`"header"
+                      "main"
+                      "footer"`}
       gridTemplateRows={'60px 1fr 40px'}
       gridTemplateColumns={'1fr'}
       gap="0"
     >
-      <GridItem bg="black" area="header">
+      <GridItem area="header">
         <Navbar />
       </GridItem>
-      <GridItem bg="blackAlpha.900" area="main">
+      <GridItem area="main">
         {children}
       </GridItem>
-      <GridItem bg="black" color="white" area="footer" p={2}>
+      <GridItem area="footer" p={2}>
         <Center>
           Copyright 2022 abidibo.net{' '}
           <a href="https://www.abidibo.net" target="_blank" rel="noreferrer">

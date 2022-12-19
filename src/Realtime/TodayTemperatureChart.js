@@ -5,14 +5,17 @@ import { defaultTo } from 'ramda'
 import { useTranslation } from 'react-i18next'
 
 import { withLoader } from '@Common/Utils/HOF'
+import config from '@Config'
 
 import { useTodayDataQuery } from './Services/Api'
-import config from '@Config'
+import ComponentsTheme from '@Theme/Components'
+import { useColorMode } from '@chakra-ui/react'
 
 window.moment = dayjs
 
 const TodayTemperatureChart = () => {
   const { t } = useTranslation()
+  const { colorMode } = useColorMode()
   const { data } = useTodayDataQuery()
   const todayData = defaultTo([], data)
 
@@ -21,14 +24,13 @@ const TodayTemperatureChart = () => {
       zoomType: 'x',
       type: 'spline',
       height: '500px',
-      backgroundColor: '#121212',
+      backgroundColor: ComponentsTheme.chart.bg[colorMode],
     },
     colors: config.ui.chartColors,
     title: {
-      text: t('realtime:ui.TodayMeasures'),
       style: {
-        color: '#fff',
-      }
+        display: 'none',
+      },
     },
     xAxis: {
       type: 'datetime',
@@ -36,20 +38,35 @@ const TodayTemperatureChart = () => {
         text: t('realtime:ui.Datetime'),
       },
       lineColor: '#000',
+      labels: {
+        style: {
+          color: '#aaa',
+        },
+      },
     },
     yAxis: [
       {
         title: {
           text: `${t('realtime:ui.Temperature')} (°C)`,
         },
-        gridLineColor: '#000',
+        gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
+        labels: {
+          style: {
+            color: '#aaa',
+          },
+        },
       },
       {
         title: {
           text: `${t('realtime:ui.Pressure')} (hPa)`,
         },
         opposite: false,
-        gridLineColor: '#000',
+        gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
+        labels: {
+          style: {
+            color: '#aaa',
+          },
+        },
       },
       {
         title: {
@@ -57,15 +74,12 @@ const TodayTemperatureChart = () => {
         },
         min: 0,
         opposite: true,
-        gridLineColor: '#000',
-      },
-      {
-        title: {
-          text: `${t('realtime:ui.Accumulation')} (mm)`,
+        gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
+        labels: {
+          style: {
+            color: '#aaa',
+          },
         },
-        min: 0,
-        opposite: true,
-        gridLineColor: '#000',
       },
     ],
     tooltip: {
@@ -82,6 +96,9 @@ const TodayTemperatureChart = () => {
       layout: 'horizontal',
       align: 'center',
       verticalAlign: 'bottom',
+      itemStyle: {
+          color: '#aaa',
+      },
     },
     series: [
       {
@@ -111,15 +128,16 @@ const TodayTemperatureChart = () => {
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.rain_rate)]),
         zIndex: 1,
         tooltip: {
-          valueSuffix: 'mm',
+          valueSuffix: 'mm/h',
         },
       },
       {
         name: t('realtime:ui.Accumulation'),
-        yAxis: 3,
+        yAxis: 2,
         type: 'area',
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.rain)]),
         zIndex: 2,
+        opacity: 0.3,
         tooltip: {
           valueSuffix: 'mm',
         },

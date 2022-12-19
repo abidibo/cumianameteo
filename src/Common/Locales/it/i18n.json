@@ -11,10 +11,13 @@
   },
   "ui": {
     "AppTitle": "Cumiana Meteo",
+    "Dark": "Scuro",
     "English": "Inglese",
     "Italian": "Italiano",
+    "Light": "Chiaro",
     "Loading": "Caricamento",
     "Locale": "Lingua",
-    "Settings": "Impostazioni"
+    "Settings": "Impostazioni",
+    "Theme": "Tema"
   }
 }
