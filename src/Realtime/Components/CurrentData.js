@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 
 import { withLoader } from '@Common/Utils/HOF'
 import { IoCalendarOutline } from 'react-icons/io5'
-import { WiBarometer, WiHumidity, WiRain, WiRaindrop, WiThermometer, WiWindy } from 'react-icons/wi'
+import { WiBarometer, WiHumidity, WiRain, WiThermometer, WiWindy } from 'react-icons/wi'
+import { GiDew } from 'react-icons/gi'
 
 const CurrentData = () => {
   const { t } = useTranslation()
@@ -31,7 +32,7 @@ const CurrentData = () => {
           <StatNumber>{data.relative_humidity} %</StatNumber>
         </Stat>
         <Stat>
-          <StatLabel display={'flex'} alignItems='center' gap={'.5rem'}><WiRaindrop size={25} />{t('realtime:ui.Dewpoint')}</StatLabel>
+          <StatLabel display={'flex'} alignItems='center' gap={'.5rem'}><GiDew size={20} />{t('realtime:ui.Dewpoint')}</StatLabel>
           <StatNumber>{data.dewpoint} °C</StatNumber>
         </Stat>
         <Stat>
