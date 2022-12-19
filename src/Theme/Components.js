@@ -8,7 +8,7 @@ const ComponentsTheme = {
   chart: {
     bg: {
       light: '#fff',
-      dark: '#222',
+      dark: '#0d2221',
     },
     gridColor: {
       light: '#ddd',
