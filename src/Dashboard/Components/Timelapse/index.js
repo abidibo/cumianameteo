@@ -66,7 +66,7 @@ const Timelapse = ({ cover, imagesUrls }) => {
         } else {
           setCurrentIndex(nextIndex)
         }
-      }, 50)
+      }, 60)
       return () => clearInterval(intervalId)
     } else if (status === STOPPED) {
       clearInterval(intervalId)
