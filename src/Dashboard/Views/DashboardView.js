@@ -63,7 +63,7 @@ const DashboardView = () => {
               {<TodaySingleChart keyName='temperature' label={t('realtime:ui.Temperature')} unit={'°C'} color={config.ui.chartColors[0]} />} 
               {<TodaySingleChart keyName='pressure' label={t('realtime:ui.Pressure')} unit={'hPa'} color={config.ui.chartColors[1]} />} 
               {<TodaySingleChart keyName='pressure' label={t('realtime:ui.RelativeHumidity')} unit={'%'} color={config.ui.chartColors[2]} />} 
-              {<TodaySingleChart keyName='rain' label={t('realtime:ui.Rain')} unit={'%'} color={config.ui.chartColors[3]} type='area' />} 
+              {<TodaySingleChart keyName='rain' label={t('realtime:ui.Rain')} unit={'mm'} color={config.ui.chartColors[3]} type='area' />} 
             </SimpleGrid>
           </Panel>
         </SimpleGrid>
