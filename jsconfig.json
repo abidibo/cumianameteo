@@ -10,6 +10,7 @@
       "@Config/*": ["./Config/*"],
       "@Core/*": ["./Core/*"],
       "@Dashboard/*": ["./Dashboard/*"],
+      "@Foreacast/*": ["./Forecast/*"],
       "@Theme": ["./Theme/index.js"],
       "@Theme/*": ["./Theme/*"]
     }

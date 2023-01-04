@@ -15,6 +15,7 @@ export const api = createApi({
   baseQuery,
   tagTypes: [
     'RealtimeCurrentData',
+    'Forecast',
   ],
   endpoints: () => ({}),
 })

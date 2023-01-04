@@ -8,6 +8,8 @@ import i18nDashboardIt from './Dashboard/Locales/it/i18n.json'
 import i18nDashboardEn from './Dashboard/Locales/en/i18n.json'
 import i18nRealtimeIt from './Realtime/Locales/it/i18n.json'
 import i18nRealtimeEn from './Realtime/Locales/en/i18n.json'
+import i18nForecastIt from './Forecast/Locales/it/i18n.json'
+import i18nForecastEn from './Forecast/Locales/en/i18n.json'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
 // the translations
@@ -18,11 +20,13 @@ const resources = {
     common: i18nCommonIt,
     dashboard: i18nDashboardIt,
     realtime: i18nRealtimeIt,
+    forecast: i18nForecastIt,
   },
   en: {
     common: i18nCommonEn,
     dashboard: i18nDashboardEn,
     realtime: i18nRealtimeEn,
+    forecast: i18nForecastEn,
   },
 }
 

@@ -10,6 +10,7 @@ import StartupView from './Views/StartupView'
 import Toast from '@Common/Components/Toast'
 import theme from '@Theme'
 import '@fontsource/abel/400.css'
+import i18n from 'i18n'
 
 
 const AppContent = () => {
@@ -28,6 +29,7 @@ const AppContent = () => {
 function App() {
   Logger.info('Rendering App component')
   Logger.debug('Theme', theme)
+  Logger.debug('I18n', i18n)
 
   return (
     <ChakraProvider theme={theme}>

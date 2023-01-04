@@ -1,0 +1,8 @@
+{
+  "ui": {
+    "Forecast": "Previsioni",
+    "Reliability": "Attendilibilità",
+    "Temperatures": "Temperature",
+    "Winds": "Venti"
+  }
+}

@@ -12,7 +12,7 @@ import ComponentsTheme from '@Theme/Components'
  * @param {Component} props.children - the main content
  * @param {Boolean} props.withFab - if the view contains a fab button, anm additional bottom padding is added
  */
-const BaseLayout = ({ children }) => {
+const BaseLayout = ({ children, dashboard, forecast }) => {
   const { colorMode } = useColorMode()
 
   return (
@@ -26,7 +26,7 @@ const BaseLayout = ({ children }) => {
       gap="0"
     >
       <GridItem area="header">
-        <Navbar />
+        <Navbar dashboard={dashboard} forecast={forecast} />
       </GridItem>
       <GridItem area="main">{children}</GridItem>
       <GridItem
@@ -50,6 +50,8 @@ const BaseLayout = ({ children }) => {
 
 BaseLayout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  dashboard: PropTypes.bool,
+  forecast: PropTypes.bool,
 }
 
 export default BaseLayout

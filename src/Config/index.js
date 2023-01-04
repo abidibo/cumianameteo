@@ -12,6 +12,7 @@ const config = {
   apiBasePath: process.env.REACT_APP_API_BASE_PATH,
   urls: {
     home: '/',
+    forecast: '/forecast',
   },
   ui: {
     chartColors: [

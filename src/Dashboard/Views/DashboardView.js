@@ -41,7 +41,7 @@ const DashboardView = () => {
 
 
   return (
-    <BaseLayout>
+    <BaseLayout dashboard>
       <Box p={5} gap="1rem">
         <SimpleGrid columns={{ sm: 1, md: 1, lg: 2 }} spacing={4}>
           <Box>
@@ -56,7 +56,7 @@ const DashboardView = () => {
             <CurrentData />
           </Box>
         </SimpleGrid>
-        <SimpleGrid columns={{ sm: 1, md: 1, lg: 1 }} spacing={4}>
+        <SimpleGrid columns={{ sm: 1, md: 1, lg: 1 }} spacing={4} margin='1rem 0'>
           <Panel title={t('realtime:ui.TodayMeasures')}>
             {isBigScreen && (<TodayChart />)}
             <SimpleGrid columns={{ sm: 1, md: 1, lg: 2 }} spacing={0}>
