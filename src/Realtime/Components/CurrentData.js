@@ -95,11 +95,11 @@ const CurrentData = () => {
             <WiWindy size={25} /> {t('realtime:ui.Wind')}
           </StatLabel>
           <StatNumber>
-            {data.wind_strength} km/s {windDirection(data.wind_dir)}
+            {data.wind_strength} km/h {windDirection(data.wind_dir)}
           </StatNumber>
           <StatHelpText>
             <StatArrow type="increase" marginLeft={'.5rem'} />
-            {data.wind_strength_max} Km/s {windDirection(data.wind_dir_max)}
+            {data.wind_strength_max} Km/h {windDirection(data.wind_dir_max)}
           </StatHelpText>
         </Stat>
       </SimpleGrid>
