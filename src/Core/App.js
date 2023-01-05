@@ -37,6 +37,7 @@ function App() {
   Logger.debug('Theme', theme)
   Logger.debug('I18n', i18n)
 
+  dayjs.locale(i18n.language)
   EventDispatcher.register('localeChange', (_, locale) => {
     dayjs.locale(locale)
   })
