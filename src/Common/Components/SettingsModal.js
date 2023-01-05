@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Box, Select, useColorMode } from '@chakra-ui/react'
 import { useForm } from '@Common/Utils/Hooks'
 import { setStateFromEvent } from '@Common/Utils/Events'
+import EventDispatcher from '@Common/Services/EventDispatcher'
 import Field from './Field'
 
 const SettingsModal = ({ onClose }) => {
@@ -13,6 +14,7 @@ const SettingsModal = ({ onClose }) => {
 
   const handleSubmit = () => {
     i18n.changeLanguage(fields.locale)
+    EventDispatcher.emit('localeChange', fields.locale)
     setColorMode(fields.colorMode) 
     onClose()
   }

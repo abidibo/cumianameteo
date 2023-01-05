@@ -35,7 +35,7 @@ const Statistics = ({ data, keyName, unit, useSameKey, showTotal }) => {
   return (
     <Box background={ComponentsTheme.chart.bg[colorMode]}>
       <TableContainer>
-        <Table variant="simple" size='sm'>
+        <Table variant="striped" size='sm'>
           <Thead>
             <Tr>
               <Th>{t('realtime:ui.Min')}</Th>

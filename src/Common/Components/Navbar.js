@@ -1,4 +1,4 @@
-import { Box, Heading, Tooltip, useColorMode } from '@chakra-ui/react'
+import { Box, Heading, Tooltip, useColorMode, useMediaQuery } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { compose, F, T } from 'ramda'
 import { useState } from 'react'
@@ -8,6 +8,7 @@ import { IoHomeOutline, IoSettingsOutline, IoSunnyOutline, IoTimeOutline } from 
 import config from '@Config'
 import { history } from '@Core/Redux/Store'
 import ComponentsTheme from '@Theme/Components'
+import theme from '@Theme'
 
 import Logo from './Logo'
 import SettingsModal from './SettingsModal'
@@ -16,6 +17,8 @@ const Navbar = () => {
   const { t } = useTranslation()
   const { colorMode } = useColorMode()
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState(false)
+
+  const [isBigScreen] = useMediaQuery(`(min-width: ${theme.breakpoints.md})`)
 
   const handleOpenSettings = compose(setSettingsModalIsOpen, T)
   const handleCloseSettings = compose(setSettingsModalIsOpen, F)
@@ -33,7 +36,7 @@ const Navbar = () => {
       px={5}
     >
       <Heading colorScheme="orange" color="orange" fontSize={'1.6rem'}>
-        <Logo width="200px" height="34px" textColor={'orange'} iconColor="#44B2AE" />
+        <Logo width={isBigScreen ? '200px' : '170px'} height="34px" textColor={'orange'} iconColor="#44B2AE" />
       </Heading>
       <Box display="flex" gap={4}>
         <Tooltip label={t('ui.Home')}>

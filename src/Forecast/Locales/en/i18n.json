@@ -1,6 +1,7 @@
 {
   "ui": {
     "Forecast": "Forecast",
+    "PoweredBy": "Powered By",
     "Reliability": "Reliability",
     "Temperatures": "Temperatures",
     "Winds": "Winds"

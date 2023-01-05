@@ -1,4 +1,8 @@
 {
+  "errors": {
+    "ToDateMinorThanFromDate": "Wrong date selection",
+    "ToDateMinorThanFromDateErrorDescription": "To date should be greater than or equal to from date"
+  },
   "ui": {
     "Accumulation": "Accumulation",
     "Datetime": "Datetime",

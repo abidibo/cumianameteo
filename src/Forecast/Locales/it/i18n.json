@@ -1,6 +1,7 @@
 {
   "ui": {
     "Forecast": "Previsioni",
+    "PoweredBy": "Fornite da",
     "Reliability": "Attendilibilità",
     "Temperatures": "Temperature",
     "Winds": "Venti"

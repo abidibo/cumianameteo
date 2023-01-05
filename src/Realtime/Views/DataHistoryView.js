@@ -11,6 +11,7 @@ import config from '@Config'
 import DataHistorySingleChart from '@Realtime/Components/DataHistorySingleChart'
 import Statistics from '@Realtime/Components/Statistics'
 import { useHistoryDataQuery } from '@Realtime/Services/Api'
+import { toast } from '@Common/Components/Toast'
 
 const DFT_FROM = parseInt(dayjs().subtract(1, 'months').valueOf() / 1e3)
 const DFT_TO = parseInt(dayjs().valueOf() / 1e3)
@@ -40,7 +41,17 @@ const DataHistoryView = () => {
   }
 
   const handleChangeTo = (_, d) => {
-    setToDate(parseInt(d.valueOf() / 1e3))
+    if (fromDate && fromDate * 1e3 > d.valueOf()) {
+      toast({
+        title: t(`realtime:errors.ToDateMinorThanFromDate`),
+        description: t(`realtime:errors.ToDateMinorThanFromDateErrorDescription`),
+        status: 'error',
+        duration: 10000,
+        isClosable: true,
+      })
+    } else {
+      setToDate(parseInt(d.valueOf() / 1e3))
+    }
   }
 
   return (
@@ -54,6 +65,7 @@ const DataHistoryView = () => {
                 inputProps={{ placeholder: t('realtime:ui.From') }}
                 onChange={handleChangeFrom}
                 value={fromDate * 1e3}
+                format='LL'
               />
             </FormControl>
             <FormControl>
@@ -62,6 +74,7 @@ const DataHistoryView = () => {
                 inputProps={{ placeholder: t('realtime:ui.To') }}
                 onChange={handleChangeTo}
                 value={toDate * 1e3}
+                format='LL'
               />
             </FormControl>
           </SimpleGrid>

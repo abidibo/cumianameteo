@@ -1,4 +1,8 @@
 {
+  "errors": {
+    "ToDateMinorThanFromDate": "Errore selezione data",
+    "ToDateMinorThanFromDateErrorDescription": "La data di fine deve essere successiva alla data di partenza"
+  },
   "ui": {
     "Accumulation": "Accumulo",
     "Datetime": "Data e ora",

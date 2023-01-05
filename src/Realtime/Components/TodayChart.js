@@ -38,7 +38,7 @@ const TodayChart = () => {
       title: {
         text: t('realtime:ui.Datetime'),
       },
-      lineColor: '#000',
+      lineColor: ComponentsTheme.chart.gridColor[colorMode],
       labels: {
         style: {
           color: '#aaa',

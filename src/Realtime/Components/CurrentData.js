@@ -19,7 +19,7 @@ const CurrentData = () => {
           <StatLabel display={'flex'} alignItems="center" gap={'.5rem'}>
             <IoCalendarOutline /> {t('realtime:ui.Datetime')}
           </StatLabel>
-          <StatNumber>{dayjs(data.datetime).format('DD/MM/YY')}</StatNumber>
+          <StatNumber>{dayjs(data.datetime).format('LL')}</StatNumber>
           <StatHelpText>{dayjs(data.datetime).format('HH:mm')}</StatHelpText>
         </Stat>
         <Stat>
