@@ -5,10 +5,16 @@
     "Dewpoint": "Dewpoint",
     "From": "From",
     "Max": "Max",
+    "MaxPressure": "Max Pressure",
+    "MaxRelativeHumidity": "Max Relative Humidity",
     "MaxTemperature": "Max Temperature",
     "Mean": "Mean",
+    "MeanPressure": "Mean Pressure",
+    "MeanRelativeHumidity": "Mean Relative Humidity",
     "MeanTemperature": "Mean Temperature",
     "Min": "Min",
+    "MinPressure": "Min Pressure",
+    "MinRelativeHumidity": "Min Relative Humidity",
     "MinTemperature": "Min Temperature",
     "Pressure": "Pressure",
     "Rain": "Rain",
@@ -17,6 +23,7 @@
     "Temperature": "Temperature",
     "To": "To",
     "TodayMeasures": "Today measures",
+    "Total": "Total",
     "Wind": "Wind"
   }
 }

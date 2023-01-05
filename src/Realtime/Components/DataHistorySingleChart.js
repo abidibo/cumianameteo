@@ -1,19 +1,66 @@
-import PropTypes from 'prop-types'
+import { useColorMode } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
 import { withLoader } from '@Common/Utils/HOF'
-
 import ComponentsTheme from '@Theme/Components'
-import { useColorMode } from '@chakra-ui/react'
 
 window.moment = dayjs
 
-const DataHistorySingleChart = ({ label, labelMean, labelMin, labelMax, unit, colorMean, colorMin, colorMax, type, dataMean, dataMin, dataMax }) => {
+const DataHistorySingleChart = ({
+  label,
+  labelMean,
+  labelMin,
+  labelMax,
+  unit,
+  colorMean,
+  colorMin,
+  colorMax,
+  type,
+  dataMean,
+  dataMin,
+  dataMax,
+}) => {
   const { t } = useTranslation()
   const { colorMode } = useColorMode()
+
+  const series = []
+  if (labelMean) {
+    series.push({
+      name: labelMean,
+      data: dataMean,
+      color: colorMean,
+      zIndex: 6,
+      tooltip: {
+        valueSuffix: unit,
+      },
+    })
+  }
+  if (labelMin) {
+    series.push({
+      name: labelMin,
+      data: dataMin,
+      color: colorMin,
+      zIndex: 6,
+      tooltip: {
+        valueSuffix: unit,
+      },
+    })
+  }
+  if (labelMax) {
+    series.push({
+      name: labelMax,
+      data: dataMax,
+      color: colorMax,
+      zIndex: 6,
+      tooltip: {
+        valueSuffix: unit,
+      },
+    })
+  }
 
   let options = {
     chart: {
@@ -64,44 +111,15 @@ const DataHistorySingleChart = ({ label, labelMean, labelMin, labelMax, unit, co
       align: 'center',
       verticalAlign: 'bottom',
       itemStyle: {
-          color: '#aaa',
+        color: '#aaa',
       },
     },
     tooltip: {
       shared: true,
       crosshairs: true,
     },
-    series: [
-      {
-        name: labelMean,
-        data: dataMean,
-        color: colorMean,
-        zIndex: 6,
-        tooltip: {
-          valueSuffix: unit,
-        },
-      },
-      {
-        name: labelMin,
-        data: dataMin,
-        color: colorMin,
-        zIndex: 6,
-        tooltip: {
-          valueSuffix: unit,
-        },
-      },
-      {
-        name: labelMax,
-        data: dataMax,
-        color: colorMax,
-        zIndex: 6,
-        tooltip: {
-          valueSuffix: unit,
-        },
-      },
-    ],
+    series,
   }
-  console.log('CHART OPTIONS', options) // eslint-disable-line
 
   return withLoader(
     () => (

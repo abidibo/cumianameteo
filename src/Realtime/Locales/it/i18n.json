@@ -5,10 +5,13 @@
     "Dewpoint": "Punto di rugiada",
     "From": "Da",
     "Max": "Max",
+    "Maxpressure": "Pressione massima",
     "MaxTemperature": "Temperatura massima",
     "Mean": "Mean",
+    "MeanPressure": "Pressione media",
     "MeanTemperature": "Temperatura media",
     "Min": "Min",
+    "MinPressure": "Pressione minima",
     "MinTemperature": "Temperatura minima",
     "Pressure": "Pressione",
     "Rain": "Precipitazioni",
@@ -17,6 +20,7 @@
     "Temperature": "Temperatura",
     "To": "A",
     "TodayMeasures": "Misurazioni odierne",
+    "Total": "Totale",
     "Wind": "Vento"
   }
 }
