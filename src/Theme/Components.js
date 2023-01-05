@@ -1,13 +1,13 @@
 const ComponentsTheme = {
   navbar: {
     bg: {
-      light: 'gray.200',
+      light: 'gray.100',
       dark: 'blackAlpha.500',
     }
   },
   footer: {
     bg: {
-      light: 'gray.200',
+      light: 'gray.100',
       dark: 'blackAlpha.500',
     }
   },
@@ -24,7 +24,7 @@ const ComponentsTheme = {
   panel: {
     heading: {
       bg: {
-        light: 'gray.200',
+        light: 'gray.100',
         dark: 'blackAlpha.400',
       }
     }

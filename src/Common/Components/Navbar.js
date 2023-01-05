@@ -36,7 +36,7 @@ const Navbar = () => {
       px={5}
     >
       <Heading colorScheme="orange" color="orange" fontSize={'1.6rem'}>
-        <Logo width={isBigScreen ? '200px' : '170px'} height="34px" textColor={'orange'} iconColor="#44B2AE" />
+        <Logo width={isBigScreen ? '200px' : '170px'} height="34px" textColor={colorMode === 'light' ? '#cc6600' : 'orange'} iconColor="#44B2AE" />
       </Heading>
       <Box display="flex" gap={4}>
         <Tooltip label={t('ui.Home')}>
