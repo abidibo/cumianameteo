@@ -1,4 +1,4 @@
-import { Box, Flex, FormControl } from '@chakra-ui/react'
+import { Box, FormControl, SimpleGrid } from '@chakra-ui/react'
 import { DatePickerInput } from 'chakra-datetime-picker'
 import dayjs from 'dayjs'
 import { useState } from 'react'
@@ -23,25 +23,25 @@ const DataHistoryView = () => {
   console.log('DATA', data, setFromDate, setToDate) // eslint-disable-line
 
   const handleChangeFrom = (_, d) => {
-    setFromDate(parseInt(d.valueOf / 1e3))
+    setFromDate(parseInt(d.valueOf() / 1e3))
   }
 
   const handleChangeTo = (_, d) => {
-    setToDate(parseInt(d.valueOf / 1e3))
+    setToDate(parseInt(d.valueOf() / 1e3))
   }
 
   return (
     <BaseLayout>
       <Box p={5} gap="1rem">
         <Panel title={t('ui.DataHistory')}>
-          <Flex gap={5} marginTop="1rem">
+          <SimpleGrid  columns={{ sm: 1, md: 2, lg: 2 }} spacing={4} marginTop="1rem">
             <FormControl>
               <DatePickerInput allowClear={false} inputProps={{ placeholder: t('realtime:ui.From') }} onChange={handleChangeFrom} value={fromDate * 1e3} />
             </FormControl>
             <FormControl>
               <DatePickerInput allowClear={false} inputProps={{ placeholder: t('realtime:ui.To') }} onChange={handleChangeTo} value={toDate * 1e3} />
             </FormControl>
-          </Flex>
+          </SimpleGrid>
         </Panel>
         {withLoader(
           () => (
