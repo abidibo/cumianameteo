@@ -143,7 +143,7 @@ const TodayChart = () => {
         dashStyle: 'Dash',
         zIndex: 3,
         tooltip: {
-          valueSuffix: 'hPa',
+          valueSuffix: '%',
         },
       },
       {
