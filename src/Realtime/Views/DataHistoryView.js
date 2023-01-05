@@ -12,6 +12,7 @@ import DataHistorySingleChart from '@Realtime/Components/DataHistorySingleChart'
 import Statistics from '@Realtime/Components/Statistics'
 import { useHistoryDataQuery } from '@Realtime/Services/Api'
 import { toast } from '@Common/Components/Toast'
+// import i18n from 'i18n'
 
 const DFT_FROM = parseInt(dayjs().subtract(1, 'months').valueOf() / 1e3)
 const DFT_TO = parseInt(dayjs().valueOf() / 1e3)
@@ -37,6 +38,7 @@ const DataHistoryView = () => {
   })
 
   const handleChangeFrom = (_, d) => {
+    console.log('VENGO CHIAMATO') // eslint-disable-line
     setFromDate(parseInt(d.valueOf() / 1e3))
   }
 
@@ -65,7 +67,6 @@ const DataHistoryView = () => {
                 inputProps={{ placeholder: t('realtime:ui.From') }}
                 onChange={handleChangeFrom}
                 value={fromDate * 1e3}
-                format='LL'
               />
             </FormControl>
             <FormControl>
@@ -74,7 +75,6 @@ const DataHistoryView = () => {
                 inputProps={{ placeholder: t('realtime:ui.To') }}
                 onChange={handleChangeTo}
                 value={toDate * 1e3}
-                format='LL'
               />
             </FormControl>
           </SimpleGrid>
