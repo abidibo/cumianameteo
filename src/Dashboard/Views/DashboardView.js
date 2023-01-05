@@ -41,7 +41,7 @@ const DashboardView = () => {
 
 
   return (
-    <BaseLayout dashboard>
+    <BaseLayout>
       <Box p={5} gap="1rem">
         <SimpleGrid columns={{ sm: 1, md: 1, lg: 2 }} spacing={4}>
           <Box>

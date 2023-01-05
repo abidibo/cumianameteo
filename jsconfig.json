@@ -11,6 +11,7 @@
       "@Core/*": ["./Core/*"],
       "@Dashboard/*": ["./Dashboard/*"],
       "@Foreacast/*": ["./Forecast/*"],
+      "@Realtime/*": ["./Realtime/*"],
       "@Theme": ["./Theme/index.js"],
       "@Theme/*": ["./Theme/*"]
     }

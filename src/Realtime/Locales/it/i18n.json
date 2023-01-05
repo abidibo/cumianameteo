@@ -3,10 +3,15 @@
     "Accumulation": "Accumulo",
     "Datetime": "Data e ora",
     "Dewpoint": "Punto di rugiada",
+    "From": "Da",
+    "MaxTemperature": "Temperatura massima",
+    "MeanTemperature": "Temperatura media",
+    "MinTemperature": "Temperatura minima",
     "Pressure": "Pressione",
     "Rain": "Precipitazioni",
     "RelativeHumidity": "Umidità relativa",
     "Temperature": "Temperatura",
+    "To": "A",
     "TodayMeasures": "Misurazioni odierne",
     "Wind": "Vento"
   }

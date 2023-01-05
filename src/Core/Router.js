@@ -6,6 +6,7 @@ import config from '@Config'
 // views
 import DashboardView from '@Dashboard/Views/DashboardView'
 import ForecastView from '@Foreacast/Views/ForecastView'
+import DataHistoryView from '@Realtime/Views/DataHistoryView'
 
 /**
  * Main application router
@@ -19,6 +20,7 @@ const AppRouter = () => {
       <Routes>
         <Route exact path={config.urls.home} element={<DashboardView />} />
         <Route exact path={config.urls.forecast} element={<ForecastView />} />
+        <Route exact path={config.urls.dataHistory} element={<DataHistoryView />} />
       </Routes>
     </Router>
   )

@@ -15,6 +15,12 @@ const extendedApi = api.injectEndpoints({
       }),
       providesTags: ['RealtimeTodayData'],
     }),
+    historyData: builder.query({
+      query: ({ from, to }) => ({
+        url: `realtime/${config.station.slug}/history/?from=${from}&to=${to}`,
+      }),
+      providesTags: ['HistoryData'],
+    }),
   }),
   overrideExisting: false,
 })
@@ -22,4 +28,5 @@ const extendedApi = api.injectEndpoints({
 export const {
   useCurrentDataQuery,
   useTodayDataQuery,
+  useHistoryDataQuery,
 } = extendedApi

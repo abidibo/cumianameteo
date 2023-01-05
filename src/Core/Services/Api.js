@@ -14,8 +14,9 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery,
   tagTypes: [
-    'RealtimeCurrentData',
     'Forecast',
+    'HistoryData',
+    'RealtimeCurrentData',
   ],
   endpoints: () => ({}),
 })

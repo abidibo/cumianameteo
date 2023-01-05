@@ -3,10 +3,15 @@
     "Accumulation": "Accumulation",
     "Datetime": "Datetime",
     "Dewpoint": "Dewpoint",
+    "From": "From",
+    "MaxTemperature": "Max Temperature",
+    "MeanTemperature": "Mean Temperature",
+    "MinTemperature": "Min Temperature",
     "Pressure": "Pressure",
     "Rain": "Rain",
     "RelativeHumidity": "Relative humidity",
     "Temperature": "Temperature",
+    "To": "To",
     "TodayMeasures": "Today measures",
     "Wind": "Wind"
   }

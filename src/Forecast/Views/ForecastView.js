@@ -12,7 +12,7 @@ const ForecastView = () => {
   const { t } = useTranslation()
   const { data, isFetching } = useLastForecastQuery()
   return (
-    <BaseLayout forecast>
+    <BaseLayout>
       <Box p={5} gap="1rem">
         {withLoader(
           () => (

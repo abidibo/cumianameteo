@@ -13,6 +13,7 @@ const config = {
   urls: {
     home: '/',
     forecast: '/forecast',
+    dataHistory: '/data/history',
   },
   ui: {
     chartColors: [
@@ -24,6 +25,7 @@ const config = {
       '#96031A',
       '#6D676E',
       '#EBEBD3',
+      '#ff0000',
     ]
   }
 }
