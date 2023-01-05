@@ -84,11 +84,11 @@ const DataHistoryView = () => {
             <Box marginTop="2rem">
               <Panel
                 title={
-                  <Flex alignItems={'center'} justifyContent="space-between" width="100%">
+                  <Flex alignItems={'center'} justifyContent="space-between" width="100%" wrap={'wrap'}>
                     <span>{t('realtime:ui.Temperature')}</span>
                     <small>
-                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm:ss')} /{' '}
-                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm:ss')}
+                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm')} /{' '}
+                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm')}
                     </small>
                   </Flex>
                 }
@@ -125,11 +125,11 @@ const DataHistoryView = () => {
 
               <Panel
                 title={
-                  <Flex alignItems={'center'} justifyContent="space-between" width="100%">
+                  <Flex alignItems={'center'} justifyContent="space-between" width="100%" wrap={'wrap'}>
                     <span>{t('realtime:ui.Pressure')}</span>
                     <small>
-                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm:ss')} /{' '}
-                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm:ss')}
+                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm')} /{' '}
+                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm')}
                     </small>
                   </Flex>
                 }
@@ -166,11 +166,11 @@ const DataHistoryView = () => {
 
               <Panel
                 title={
-                  <Flex alignItems={'center'} justifyContent="space-between" width="100%">
+                  <Flex alignItems={'center'} justifyContent="space-between" width="100%" wrap={'wrap'}>
                     <span>{t('realtime:ui.RelativeHumidity')}</span>
                     <small>
-                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm:ss')} /{' '}
-                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm:ss')}
+                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm')} /{' '}
+                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm')}
                     </small>
                   </Flex>
                 }
@@ -207,11 +207,11 @@ const DataHistoryView = () => {
 
               <Panel
                 title={
-                  <Flex alignItems={'center'} justifyContent="space-between" width="100%">
+                  <Flex alignItems={'center'} justifyContent="space-between" width="100%" wrap={'wrap'}>
                     <span>{t('realtime:ui.Rain')}</span>
                     <small>
-                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm:ss')} /{' '}
-                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm:ss')}
+                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm')} /{' '}
+                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm')}
                     </small>
                   </Flex>
                 }

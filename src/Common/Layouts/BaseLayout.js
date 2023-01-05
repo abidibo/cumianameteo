@@ -34,7 +34,7 @@ const BaseLayout = ({ children }) => {
       <GridItem area="header">
         <Navbar />
       </GridItem>
-      <GridItem area="main">
+      <GridItem area="main" style={{ maxWidth: '100%', overflow: 'hidden' }}>
         <Container size='xl'>
           {children}
         </Container>
