@@ -1,7 +1,7 @@
 import { Box, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-import { defaultTo } from 'ramda'
+import { sum } from 'ramda'
 import { useTranslation } from 'react-i18next'
 
 import { round } from '@Common/Utils/Numbers'
@@ -12,9 +12,11 @@ const Statistics = ({ data, keyName, unit, useSameKey, showTotal }) => {
   const { colorMode } = useColorMode()
 
   let min, minDate, max, maxDate, mean, total
+  const meanItems = []
   data.forEach((item) => {
     const itemMin = useSameKey ? parseFloat(item[keyName]) : parseFloat(item[`${keyName}_min`])
     const itemMax = useSameKey ? parseFloat(item[keyName]) : parseFloat(item[`${keyName}_max`])
+    const itemMean = useSameKey ? parseFloat(item[keyName]) : parseFloat(item[`${keyName}_mean`])
     if (min === undefined || itemMin < min) {
       minDate = item.date
       min = itemMin
@@ -23,10 +25,12 @@ const Statistics = ({ data, keyName, unit, useSameKey, showTotal }) => {
       maxDate = item.date
       max = itemMax
     }
-    mean = defaultTo(0, mean) + parseFloat(useSameKey ? item[keyName] : item[`${keyName}_mean`])
+    if (!isNaN(itemMean)) {
+      meanItems.push(itemMean)
+    }
   })
-  total = round(mean, 1)
-  mean = round(mean / data.length, 1)
+  total = round(sum(meanItems), 1)
+  mean = round(total / meanItems.length, 1)
 
   return (
     <Box background={ComponentsTheme.chart.bg[colorMode]}>
@@ -56,7 +60,7 @@ const Statistics = ({ data, keyName, unit, useSameKey, showTotal }) => {
 }
 
 Statistics.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   keyName: PropTypes.string,
   unit: PropTypes.string,
   useSameKey: PropTypes.bool,
