@@ -1,4 +1,13 @@
-import { Box, Button, Image as UiImage, Tooltip } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Image as UiImage,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  Tooltip,
+} from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { curry } from 'ramda'
 import { useEffect, useState } from 'react'
@@ -6,12 +15,20 @@ import { useTranslation } from 'react-i18next'
 import { IoCameraOutline, IoPauseOutline, IoPlayOutline } from 'react-icons/io5'
 import styled from 'styled-components'
 
-import Logger from '@Common/Utils/Logger'
 import Panel from '@Common/Components/Panel'
+import Logger from '@Common/Utils/Logger'
 
 const Frame = styled(Box)`
   // border-width: 5px;
   position: relative;
+`
+
+const SpeedSlider = styled.div`
+  bottom: 1rem;
+  position: absolute !important;
+  left: 1rem;
+  width: 200px;
+  z-index: 1399;
 `
 
 const StartButton = styled(Button)`
@@ -44,6 +61,20 @@ const Timelapse = ({ cover, imagesUrls }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [status, setStatus] = useState(STOPPED)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [speed, setSpeed] = useState(95)
+
+  const animate = () => {
+    let idx = currentIndex
+    return setInterval(() => {
+      const nextIndex = idx++
+      if (nextIndex === imagesUrls.length - 1) {
+        setStatus(STOPPED)
+        setCurrentIndex(0)
+      } else {
+        setCurrentIndex(nextIndex)
+      }
+    }, (400 - 3.6 * speed))
+  }
 
   useEffect(() => {
     let counter = 0
@@ -57,21 +88,19 @@ const Timelapse = ({ cover, imagesUrls }) => {
   useEffect(() => {
     if (status === PLAYING) {
       Logger.debug('Timelapse, playing')
-      let idx = currentIndex
-      intervalId = setInterval(() => {
-        const nextIndex = idx++
-        if (nextIndex === imagesUrls.length - 1) {
-          setStatus(STOPPED)
-          setCurrentIndex(0)
-        } else {
-          setCurrentIndex(nextIndex)
-        }
-      }, 60)
+      intervalId = animate()
       return () => clearInterval(intervalId)
     } else if (status === STOPPED) {
       clearInterval(intervalId)
     }
   }, [status])
+
+  useEffect(() => {
+    if (status === PLAYING) {
+      clearInterval(intervalId)
+      intervalId = animate()
+    }
+  }, [speed])
 
   const handleStatusChange = () => {
     setStatus(status === STOPPED || status === PAUSED ? PLAYING : PAUSED)
@@ -90,8 +119,18 @@ const Timelapse = ({ cover, imagesUrls }) => {
     <Panel title={t('dashboard:ui.WebcamPanelTitle')} icon={<IoCameraOutline />}>
       <Frame borderColor="gray.100">
         <UiImage src={cover} style={{ zIndex: imagesUrls.length + 10 }} />
+        <Tooltip label={t('dashboard:ui.TimelapseSpeed')}>
+          <SpeedSlider>
+            <Slider aria-label="slider-ex-1" defaultValue={speed} colorScheme="orange" onChangeEnd={setSpeed}>
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+          </SpeedSlider>
+        </Tooltip>
         <Tooltip label={tooltipLabels[status]}>
-          <StartButton size='sm' colorScheme="orange" isLoading={isLoading} onClick={handleStatusChange}>
+          <StartButton size="sm" colorScheme="orange" isLoading={isLoading} onClick={handleStatusChange}>
             {status === STOPPED && <IoPlayOutline size={26} />}
             {status === PAUSED && <IoPlayOutline size={26} />}
             {status === PLAYING && <IoPauseOutline size={26} />}
@@ -100,7 +139,8 @@ const Timelapse = ({ cover, imagesUrls }) => {
         </Tooltip>
         {!isLoading &&
           imagesUrls.map((url, index) => {
-            const visibility = (status === PLAYING || status === PAUSED) && index === currentIndex ? 'visible' : 'hidden'
+            const visibility =
+              (status === PLAYING || status === PAUSED) && index === currentIndex ? 'visible' : 'hidden'
             const zIndex = index + 1
             return <FrameImage key={index} src={url} style={{ zIndex, visibility }} />
           })}
