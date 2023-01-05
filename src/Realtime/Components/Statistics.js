@@ -1,4 +1,4 @@
-import { Box, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import { Box, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { sum } from 'ramda'
@@ -36,7 +36,6 @@ const Statistics = ({ data, keyName, unit, useSameKey, showTotal }) => {
     <Box background={ComponentsTheme.chart.bg[colorMode]}>
       <TableContainer>
         <Table variant="simple" size='sm'>
-          <TableCaption>{t('realtime:ui.Statistics')}</TableCaption>
           <Thead>
             <Tr>
               <Th>{t('realtime:ui.Min')}</Th>
