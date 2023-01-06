@@ -25,7 +25,7 @@ const ForecastView = () => {
                     TorinoMeteo
                   </Link>
                 </Alert>
-                <div className="forecast" dangerouslySetInnerHTML={{ __html: data.pattern }} />
+                <div className="forecast" dangerouslySetInnerHTML={{ __html: data.pattern.replace('http:www', 'https://www') }} />
               </Panel>
               <div>
                 {data.day_forecasts
