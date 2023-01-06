@@ -9,7 +9,7 @@ const Map = ({ lat, lng }) => {
   useEffect(() => {
     setTimeout(() => {
       map.invalidateSize(false)
-    }, 200)
+    }, 500)
   }, [map])
 
   // attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
