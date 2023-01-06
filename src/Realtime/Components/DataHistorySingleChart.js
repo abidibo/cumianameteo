@@ -4,7 +4,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import PropTypes from 'prop-types'
 import { forEachObjIndexed, isNil } from 'ramda'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { withLoader } from '@Common/Utils/HOF'
@@ -35,24 +35,24 @@ const DataHistorySingleChart = ({
   const { t } = useTranslation()
   const { colorMode } = useColorMode()
 
-  const updateAllOtherChartsExtremes = ({ min, max }) => {
+  const updateAllOtherChartsExtremes = useCallback(({ min, max }) => {
     // update all other charts extremes
     forEachObjIndexed((r) => {
       if (r?.chart !== keyName) {
         r?.chart.xAxis[0].setExtremes(min, max)
       }
     })(chartsRef.current)
-  }
+  }, [keyName, chartsRef])
 
-  const onZoomChange = () => {
+  const onZoomChange = useCallback(() => {
     if (!controllingChart) {
       setControllingChart(keyName)
     } else if (controllingChart !== keyName) {
       return false
     }
-  }
+  }, [controllingChart, setControllingChart, keyName])
 
-  const onAfterSetExtremes = (evt) => {
+  const onAfterSetExtremes = useCallback((evt) => {
     if (controllingChart === keyName) {
       setExtremes([parseInt(evt.min / 1e3), parseInt(evt.max / 1e3)])
       updateAllOtherChartsExtremes(evt)
@@ -60,8 +60,7 @@ const DataHistorySingleChart = ({
         setControllingChart(null)
       }
     }
-    // set extremes
-  }
+  }, [controllingChart, setControllingChart, keyName, updateAllOtherChartsExtremes, setExtremes])
 
   useEffect(() => {
     if (controllingChart) {

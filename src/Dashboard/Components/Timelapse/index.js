@@ -17,6 +17,7 @@ import styled from 'styled-components'
 
 import Panel from '@Common/Components/Panel'
 import Logger from '@Common/Utils/Logger'
+import { round } from '@Common/Utils/Numbers'
 
 const Frame = styled(Box)`
   // border-width: 5px;
@@ -27,8 +28,12 @@ const SpeedSlider = styled.div`
   bottom: 1rem;
   position: absolute !important;
   left: 1rem;
-  width: 200px;
+  width: 160px;
   z-index: 1399;
+`
+
+const ProgressSlider = styled.div`
+  margin: 0 6px;
 `
 
 const StartButton = styled(Button)`
@@ -56,12 +61,18 @@ const PAUSED = 3
 
 let intervalId
 
+const speedToInterval = (speed) => 300 - 2.9 * speed
+const speedToHz = (speed) => round(1000 / speedToInterval(speed), 1)
+
 const Timelapse = ({ cover, imagesUrls }) => {
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(true)
   const [status, setStatus] = useState(STOPPED)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [speed, setSpeed] = useState(95)
+  const [speed, setSpeed] = useState(85)
+  const [showTooltip, setShowTooltip] = useState(false)
+
+  const maxIndex = imagesUrls.length - 1
 
   const animate = () => {
     let idx = currentIndex
@@ -73,7 +84,7 @@ const Timelapse = ({ cover, imagesUrls }) => {
       } else {
         setCurrentIndex(nextIndex)
       }
-    }, (400 - 3.6 * speed))
+    }, speedToInterval(speed))
   }
 
   useEffect(() => {
@@ -117,15 +128,43 @@ const Timelapse = ({ cover, imagesUrls }) => {
 
   return (
     <Panel title={t('dashboard:ui.WebcamPanelTitle')} icon={<IoCameraOutline />}>
+      <ProgressSlider>
+        <Slider
+          value={round((currentIndex * 100) / maxIndex)}
+          colorScheme="blackAlpha"
+          onChange={(p) => setCurrentIndex(round((p * maxIndex) / 100))}
+          isDisabled={!(status === PLAYING || status === PAUSED)}
+        >
+          <SliderTrack>
+            <SliderFilledTrack />
+          </SliderTrack>
+          <SliderThumb />
+        </Slider>
+      </ProgressSlider>
       <Frame borderColor="gray.100">
         <UiImage src={cover} style={{ zIndex: imagesUrls.length + 10 }} />
         <Tooltip label={t('dashboard:ui.TimelapseSpeed')}>
           <SpeedSlider>
-            <Slider aria-label="slider-ex-1" defaultValue={speed} colorScheme="orange" onChangeEnd={setSpeed}>
+            <Slider
+              defaultValue={speed}
+              colorScheme="orange"
+              onChangeEnd={setSpeed}
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+            >
               <SliderTrack>
                 <SliderFilledTrack />
               </SliderTrack>
-              <SliderThumb />
+              <Tooltip
+                hasArrow
+                bg="teal.500"
+                color="white"
+                placement="top"
+                isOpen={showTooltip}
+                label={`${speedToHz(speed)} Hz`}
+              >
+                <SliderThumb />
+              </Tooltip>
             </Slider>
           </SpeedSlider>
         </Tooltip>

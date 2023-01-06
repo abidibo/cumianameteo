@@ -1,19 +1,26 @@
 import { Box, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/react'
+import dayjs from 'dayjs'
 import PropTypes from 'prop-types'
 import { sum } from 'ramda'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { round } from '@Common/Utils/Numbers'
 import ComponentsTheme from '@Theme/Components'
 
-const Statistics = ({ data, keyName, unit, useSameKey, showTotal }) => {
+const Statistics = ({ data, keyName, unit, useSameKey, showTotal, extremes }) => {
   const { t } = useTranslation()
   const { colorMode } = useColorMode()
 
+  const inExtremes = useCallback(
+    (item) => dayjs(item.date).valueOf() >= extremes[0] * 1e3 && dayjs(item.date) <= extremes[1] * 1e3,
+    extremes,
+  )
+
   let min, minDate, max, maxDate, mean, total
   const meanItems = []
-  data.forEach((item) => {
+  data.filter(inExtremes).forEach((item) => {
     const itemMin = useSameKey ? parseFloat(item[keyName]) : parseFloat(item[`${keyName}_min`])
     const itemMax = useSameKey ? parseFloat(item[keyName]) : parseFloat(item[`${keyName}_max`])
     const itemMean = useSameKey ? parseFloat(item[keyName]) : parseFloat(item[`${keyName}_mean`])
@@ -35,7 +42,7 @@ const Statistics = ({ data, keyName, unit, useSameKey, showTotal }) => {
   return (
     <Box background={ComponentsTheme.chart.bg[colorMode]}>
       <TableContainer>
-        <Table variant="striped" size='sm'>
+        <Table variant="striped" size="sm">
           <Thead>
             <Tr>
               <Th>{t('realtime:ui.Min')}</Th>
@@ -46,10 +53,20 @@ const Statistics = ({ data, keyName, unit, useSameKey, showTotal }) => {
           </Thead>
           <Tbody>
             <Tr>
-              <Td>{min} {unit} / {minDate}</Td>
-              <Td>{max} {unit} / { maxDate}</Td>
-              <Td>{mean} {unit}</Td>
-              {showTotal && <Td>{total} {unit}</Td>}
+              <Td>
+                {min} {unit} / {minDate}
+              </Td>
+              <Td>
+                {max} {unit} / {maxDate}
+              </Td>
+              <Td>
+                {mean} {unit}
+              </Td>
+              {showTotal && (
+                <Td>
+                  {total} {unit}
+                </Td>
+              )}
             </Tr>
           </Tbody>
         </Table>
@@ -64,6 +81,7 @@ Statistics.propTypes = {
   unit: PropTypes.string,
   useSameKey: PropTypes.bool,
   showTotal: PropTypes.bool,
+  extremes: PropTypes.arrayOf(PropTypes.number),
 }
 
 export default Statistics

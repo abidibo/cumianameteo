@@ -1,10 +1,13 @@
 {
   "errors": {
+    "FromDateGreaterThanToDate": "Errore selezione data",
+    "FromDateGreaterThanToDateErrorDescription": "La data di inizio deve essere precedente alla data di fine",
     "ToDateMinorThanFromDate": "Errore selezione data",
-    "ToDateMinorThanFromDateErrorDescription": "La data di fine deve essere successiva alla data di partenza"
+    "ToDateMinorThanFromDateErrorDescription": "La data di fine deve essere successiva alla data di inizio"
   },
   "ui": {
     "Accumulation": "Accumulo",
+    "DataCollectedFrom": "I dati sono stati raccolti a partire dal 1 febbraio 2022",
     "Datetime": "Data e ora",
     "Dewpoint": "Punto di rugiada",
     "From": "Da",
@@ -23,6 +26,7 @@
     "Pressure": "Pressione",
     "Rain": "Precipitazioni",
     "RelativeHumidity": "Umidità relativa",
+    "StationSpecifications": "Davis Vantage Vue con software Meteobridge",
     "Statistics": "Statistiche",
     "Temperature": "Temperatura",
     "To": "A",

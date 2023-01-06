@@ -7,7 +7,7 @@
     "ResumeTimelapse": "Resume",
     "StartTimelapse": "Start last 24h timelapse",
     "StopTimelapse": "Stop",
-    "TimelapseSpeed": "Timelapse Speed",
+    "TimelapseSpeed": "Timelapse Frequency",
     "WebcamPanelTitle": "Hikvision webcam, south sight"
   }
 }

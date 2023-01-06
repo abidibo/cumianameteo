@@ -1,17 +1,18 @@
-import { Box, Flex, FormControl, SimpleGrid } from '@chakra-ui/react'
+import { Alert, AlertIcon, Box, Flex, FormControl, SimpleGrid } from '@chakra-ui/react'
 import { DatePickerInput } from 'chakra-datetime-picker'
 import dayjs from 'dayjs'
 import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Panel from '@Common/Components/Panel'
+import { toast } from '@Common/Components/Toast'
 import BaseLayout from '@Common/Layouts/BaseLayout'
 import { withLoader } from '@Common/Utils/HOF'
 import config from '@Config'
 import DataHistorySingleChart from '@Realtime/Components/DataHistorySingleChart'
 import Statistics from '@Realtime/Components/Statistics'
 import { useHistoryDataQuery } from '@Realtime/Services/Api'
-import { toast } from '@Common/Components/Toast'
+
 // import i18n from 'i18n'
 
 const DFT_FROM = parseInt(dayjs().subtract(1, 'months').valueOf() / 1e3)
@@ -38,8 +39,17 @@ const DataHistoryView = () => {
   })
 
   const handleChangeFrom = (_, d) => {
-    console.log('VENGO CHIAMATO') // eslint-disable-line
-    setFromDate(parseInt(d.valueOf() / 1e3))
+    if (toDate && toDate * 1e3 < d.valueOf()) {
+      toast({
+        title: t(`realtime:errors.FromDateGreaterThanToDate`),
+        description: t(`realtime:errors.FromDateGreaterThanToDateErrorDescription`),
+        status: 'error',
+        duration: 10000,
+        isClosable: true,
+      })
+    } else {
+      setFromDate(parseInt(d.valueOf() / 1e3))
+    }
   }
 
   const handleChangeTo = (_, d) => {
@@ -60,6 +70,10 @@ const DataHistoryView = () => {
     <BaseLayout>
       <Box p={5} gap="1rem">
         <Panel title={t('ui.DataHistory')}>
+          <Alert status="info">
+            <AlertIcon />
+            {t('realtime:ui.DataCollectedFrom')}
+          </Alert>
           <SimpleGrid columns={{ sm: 1, md: 2, lg: 2 }} spacing={4} marginTop="1rem">
             <FormControl>
               <DatePickerInput
@@ -94,7 +108,7 @@ const DataHistoryView = () => {
                 }
                 boxProps={{ marginBottom: 4 }}
               >
-                <Statistics data={data} keyName="temperature" unit="°C" />
+                <Statistics data={data} keyName="temperature" unit="°C" extremes={extremes} />
                 <DataHistorySingleChart
                   keyName={'temperature'}
                   label={t('realtime:ui.Temperature')}
@@ -135,7 +149,7 @@ const DataHistoryView = () => {
                 }
                 boxProps={{ marginBottom: 4 }}
               >
-                <Statistics data={data} keyName="pressure" unit="hPa" />
+                <Statistics data={data} keyName="pressure" unit="hPa" extremes={extremes} />
                 <DataHistorySingleChart
                   keyName={'pressure'}
                   label={t('realtime:ui.Pressure')}
@@ -176,7 +190,7 @@ const DataHistoryView = () => {
                 }
                 boxProps={{ marginBottom: 4 }}
               >
-                <Statistics data={data} keyName="relative_humidity" unit="%" />
+                <Statistics data={data} keyName="relative_humidity" unit="%" extremes={extremes} />
                 <DataHistorySingleChart
                   keyName={'relative_humidity'}
                   label={t('realtime:ui.RelativeHumidity')}
@@ -216,7 +230,7 @@ const DataHistoryView = () => {
                   </Flex>
                 }
               >
-                {<Statistics data={data} keyName="rain" unit="mm" useSameKey showTotal />}
+                {<Statistics data={data} keyName="rain" unit="mm" useSameKey showTotal extremes={extremes} />}
                 <DataHistorySingleChart
                   keyName={'rain'}
                   label={t('realtime:ui.Rain')}

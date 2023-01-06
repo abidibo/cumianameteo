@@ -1,10 +1,13 @@
 {
   "errors": {
+    "FromDateGreaterThanToDate": "Wrong date selection",
+    "FromDateGreaterThanToDateErrorDescription": "From date should be lower than or equal to to date",
     "ToDateMinorThanFromDate": "Wrong date selection",
     "ToDateMinorThanFromDateErrorDescription": "To date should be greater than or equal to from date"
   },
   "ui": {
     "Accumulation": "Accumulation",
+    "DataCollectedFrom": "Data were collected starting from February 1, 2022",
     "Datetime": "Datetime",
     "Dewpoint": "Dewpoint",
     "From": "From",
@@ -23,6 +26,7 @@
     "Pressure": "Pressure",
     "Rain": "Rain",
     "RelativeHumidity": "Relative humidity",
+    "StationSpecifications": "Davis Vantage Vue with Meteobridge software",
     "Statistics": "Statistics",
     "Temperature": "Temperature",
     "To": "To",
