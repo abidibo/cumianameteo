@@ -246,6 +246,8 @@ const DataHistoryView = () => {
                   setControllingChart={setControllingChart}
                   innerRef={createRefs('rain')}
                   chartsRef={chartsRef}
+                  showAccumulation
+                  colorAccumulation={config.ui.chartColors[4]}
                 />
               </Panel>
             </Box>

@@ -26,7 +26,7 @@ const config = {
       '#6D676E',
       '#EBEBD3',
       '#ff0000',
-    ]
+    ],
   }
 }
 

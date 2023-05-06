@@ -31,6 +31,8 @@ const DataHistorySingleChart = ({
   setControllingChart,
   innerRef,
   chartsRef,
+  showAccumulation,
+  colorAccumulation,
 }) => {
   const { t } = useTranslation()
   const { colorMode } = useColorMode()
@@ -105,6 +107,20 @@ const DataHistorySingleChart = ({
     })
   }
 
+  if (showAccumulation) {
+    series.push({
+      type: 'area',
+      name: t('realtime:ui.Accumulation'),
+      data: dataMean.reduce((acc, cur, idx) => [...acc, idx === 0 ? cur : [cur[0], acc[idx - 1][1] + cur[1]]], []),
+      color: colorAccumulation,
+      opacity: .5,
+      zIndex: 5,
+      tooltip: {
+        valueSuffix: unit,
+      },
+    })
+  }
+
   let options = {
     chart: {
       zoomType: 'x',
@@ -169,6 +185,7 @@ const DataHistorySingleChart = ({
     },
     series,
   }
+  console.log('OPTIONS', options) // eslint-disable-line
 
   return withLoader(
     () => (
@@ -204,6 +221,8 @@ DataHistorySingleChart.propTypes = {
   setControllingChart: PropTypes.func.isRequired,
   innerRef: PropTypes.any,
   chartsRef: PropTypes.object,
+  showAccumulation: PropTypes.bool,
+  colorAccumulation: PropTypes.string,
 }
 
 export default DataHistorySingleChart
