@@ -48,7 +48,7 @@ const BaseLayout = ({ children }) => {
         display="flex"
       >
         <Center margin={0}>
-          Copyright 2022 abidibo.net{' '}
+          Copyright 2022-{new Date().getFullYear()} abidibo.net{' '}
           <a href="https://www.abidibo.net" target="_blank" rel="noreferrer">
             <Image style={{ display: 'inline', height: '26px', marginLeft: '.5rem' }} src={Logo} alt="logo" />
           </a>
