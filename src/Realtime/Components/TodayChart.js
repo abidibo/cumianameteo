@@ -28,6 +28,9 @@ const TodayChart = () => {
       spacing: [40, 20, 20, 20],
     },
     colors: config.ui.chartColors,
+    time: {
+      timezoneOffset: new Date().getTimezoneOffset(),
+    },
     title: {
       style: {
         display: 'none',

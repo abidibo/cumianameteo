@@ -27,6 +27,9 @@ const TodaySingleChart = ({ label, unit, keyName, color, type }) => {
       backgroundColor: ComponentsTheme.chart.bg[colorMode],
       spacing: [40, 20, 20, 20],
     },
+    time: {
+      timezoneOffset: new Date().getTimezoneOffset(),
+    },
     title: {
       style: {
         display: 'none',
