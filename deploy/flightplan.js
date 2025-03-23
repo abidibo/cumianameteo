@@ -10,7 +10,7 @@ const config = {
 }
 
 // do not edit under this line
-plan.target('development', {
+plan.target('production', {
   host: config.deployHost,
   username: config.deployUser,
   agent: process.env.SSH_AUTH_SOCK,
@@ -21,6 +21,7 @@ let tmpDir = 'cumianameteo-' + new Date().getTime()
 
 // run commands on localhost
 plan.local(function (local) {
+  return
   local.log('Run build')
   local.exec('yarn build')
 

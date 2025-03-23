@@ -49,6 +49,7 @@ const DataHistoryView = () => {
       })
     } else {
       setFromDate(parseInt(d.valueOf() / 1e3))
+      setExtremes([parseInt(d.valueOf() / 1e3), toDate])
     }
   }
 
@@ -63,6 +64,7 @@ const DataHistoryView = () => {
       })
     } else {
       setToDate(parseInt(d.valueOf() / 1e3))
+      setExtremes([fromDate, parseInt(d.valueOf() / 1e3)])
     }
   }
 

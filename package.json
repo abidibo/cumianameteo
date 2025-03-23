@@ -47,7 +47,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "deploy": "./node_modules/flightplan/bin/fly.js development -f deploy/flightplan.js"
+    "deploy": "./node_modules/flightplan/bin/fly.js production -f deploy/flightplan.js"
   },
   "eslintConfig": {
     "extends": [
