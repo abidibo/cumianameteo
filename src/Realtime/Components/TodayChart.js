@@ -21,7 +21,7 @@ const TodayChart = () => {
 
   let options = {
     chart: {
-      zoomType: 'x',
+      zooming: { type: 'x' },
       type: 'spline',
       height: '500px',
       backgroundColor: ComponentsTheme.chart.bg[colorMode],

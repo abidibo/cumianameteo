@@ -11,11 +11,11 @@ import Toast from '@Common/Components/Toast'
 import EventDispatcher from '@Common/Services/EventDispatcher'
 import theme from '@Theme'
 import '@fontsource/abel/400.css'
-import i18n from 'i18n'
+import i18n from '../i18n'
 import dayjs from 'dayjs'
-require('dayjs/locale/en')
-require('dayjs/locale/it')
-var localizedFormat = require('dayjs/plugin/localizedFormat')
+import 'dayjs/locale/en'
+import 'dayjs/locale/it'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
 dayjs.extend(localizedFormat)
 
 

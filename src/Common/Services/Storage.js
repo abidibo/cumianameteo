@@ -1,7 +1,7 @@
 import LocalStorage from './LocalStorage'
 
 const storageFactory = () => {
-  if (process.env.REACT_APP_STORAGE === 'localStorage') {
+  if (import.meta.env.VITE_STORAGE === 'localStorage') {
     return LocalStorage
   }
 }

@@ -1,5 +1,5 @@
 import { Alert, AlertIcon, Box, Heading, Image, Link, SimpleGrid } from '@chakra-ui/react'
-import { useLastForecastQuery } from 'Forecast/Services/Api'
+import { useLastForecastQuery } from '@Foreacast/Services/Api'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { IoStarOutline } from 'react-icons/io5'

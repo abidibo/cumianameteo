@@ -5,11 +5,9 @@ const config = {
     webcamBaseUrl: 'https://cumiana.cam.torinometeo.org/24h/28/',
   },
   logger: {
-    // eslint-disable-next-line no-undef
-    level: process.env.REACT_APP_LOGGER_LEVEL, // DEBUG, INFO, WARNING, ERROR
+    level: import.meta.env.VITE_LOGGER_LEVEL, // DEBUG, INFO, WARNING, ERROR
   },
-  // eslint-disable-next-line no-undef
-  apiBasePath: process.env.REACT_APP_API_BASE_PATH,
+  apiBasePath: import.meta.env.VITE_API_BASE_PATH,
   urls: {
     home: '/',
     forecast: '/forecast',

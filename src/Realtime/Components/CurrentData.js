@@ -9,8 +9,8 @@ import {
   StatNumber,
   Text,
 } from '@chakra-ui/react'
-import { useCurrentDataQuery } from 'Realtime/Services/Api'
-import { windDirection } from 'Realtime/Utils/Wind'
+import { useCurrentDataQuery } from '@Realtime/Services/Api'
+import { windDirection } from '@Realtime/Utils/Wind'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { GiDew } from 'react-icons/gi'

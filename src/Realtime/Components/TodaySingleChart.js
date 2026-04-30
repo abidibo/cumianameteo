@@ -21,7 +21,7 @@ const TodaySingleChart = ({ label, unit, keyName, color, type }) => {
 
   let options = {
     chart: {
-      zoomType: 'x',
+      zooming: { type: 'x' },
       type,
       height: '300px',
       backgroundColor: ComponentsTheme.chart.bg[colorMode],

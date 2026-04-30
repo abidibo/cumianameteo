@@ -1,5 +1,4 @@
-import { Alert, AlertIcon, Box, Flex, FormControl, SimpleGrid } from '@chakra-ui/react'
-import { DatePickerInput } from 'chakra-datetime-picker'
+import { Alert, AlertIcon, Box, Flex, FormControl, FormLabel, Input, SimpleGrid } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -78,19 +77,19 @@ const DataHistoryView = () => {
           </Alert>
           <SimpleGrid columns={{ sm: 1, md: 2, lg: 2 }} spacing={4} marginTop="1rem">
             <FormControl>
-              <DatePickerInput
-                allowClear={false}
-                inputProps={{ placeholder: t('realtime:ui.From') }}
-                onChange={handleChangeFrom}
-                value={fromDate * 1e3}
+              <FormLabel>{t('realtime:ui.From')}</FormLabel>
+              <Input
+                type="date"
+                value={dayjs(fromDate * 1e3).format('YYYY-MM-DD')}
+                onChange={(e) => e.target.value && handleChangeFrom(e, dayjs(e.target.value))}
               />
             </FormControl>
             <FormControl>
-              <DatePickerInput
-                allowClear={false}
-                inputProps={{ placeholder: t('realtime:ui.To') }}
-                onChange={handleChangeTo}
-                value={toDate * 1e3}
+              <FormLabel>{t('realtime:ui.To')}</FormLabel>
+              <Input
+                type="date"
+                value={dayjs(toDate * 1e3).format('YYYY-MM-DD')}
+                onChange={(e) => e.target.value && handleChangeTo(e, dayjs(e.target.value))}
               />
             </FormControl>
           </SimpleGrid>

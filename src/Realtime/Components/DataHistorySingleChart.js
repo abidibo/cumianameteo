@@ -123,7 +123,7 @@ const DataHistorySingleChart = ({
 
   let options = {
     chart: {
-      zoomType: 'x',
+      zooming: { type: 'x' },
       type,
       height: '400px',
       backgroundColor: ComponentsTheme.chart.bg[colorMode],
