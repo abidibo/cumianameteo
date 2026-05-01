@@ -41,16 +41,23 @@ const BaseLayout = ({ children }) => {
       </GridItem>
       <GridItem
         bg={ComponentsTheme.footer.bg[colorMode]}
+        borderTop="1px solid"
+        borderColor={colorMode === 'dark' ? 'rgba(16,185,129,0.1)' : 'rgba(0,0,0,0.06)'}
         area="footer"
         padding={0}
         alignItems="center"
         justifyContent={'center'}
         display="flex"
+        fontFamily="'Share Tech Mono', monospace"
+        fontSize="11px"
+        letterSpacing="wider"
+        color={colorMode === 'dark' ? 'gray.500' : 'gray.500'}
+        textTransform="uppercase"
       >
         <Center margin={0}>
           Copyright 2022-{new Date().getFullYear()} abidibo.net{' '}
           <a href="https://www.abidibo.net" target="_blank" rel="noreferrer">
-            <Image style={{ display: 'inline', height: '26px', marginLeft: '.5rem' }} src={Logo} alt="logo" />
+            <Image style={{ display: 'inline', height: '22px', marginLeft: '.5rem' }} src={Logo} alt="logo" />
           </a>
         </Center>
       </GridItem>

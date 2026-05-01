@@ -5,19 +5,24 @@ const config = {
   useSystemColorMode: false,
 }
 
-// const breakpoints = {
-//   sm: '30em',
-//   md: '48em',
-//   lg: '62em',
-//   xl: '80em',
-//   '2xl': '96em',
-// }
-
 const theme = extendTheme({
   config,
   fonts: {
-    heading: `'Abel', sans-serif`,
-    body: `'Abel', sans-serif`,
+    heading: `'Bebas Neue', sans-serif`,
+    body: `'DM Sans', Inter, system-ui, sans-serif`,
+    mono: `'Share Tech Mono', 'SF Mono', Consolas, monospace`,
+  },
+  styles: {
+    global: (props) => ({
+      body: {
+        background:
+          props.colorMode === 'dark'
+            ? 'radial-gradient(circle, rgba(16,185,129,0.06) 1px, transparent 1px) #080c14'
+            : 'radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px) #e8ecf0',
+        backgroundSize: '24px 24px',
+        minHeight: '100vh',
+      },
+    }),
   },
 })
 

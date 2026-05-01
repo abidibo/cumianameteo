@@ -12,6 +12,7 @@ import ComponentsTheme from '@Theme/Components'
 const Statistics = ({ data, keyName, unit, useSameKey, showTotal, extremes }) => {
   const { t } = useTranslation()
   const { colorMode } = useColorMode()
+  const isDark = colorMode === 'dark'
 
   const inExtremes = useCallback(
     (item) => dayjs(item.date).valueOf() >= extremes[0] * 1e3 && dayjs(item.date) <= extremes[1] * 1e3,
@@ -40,30 +41,34 @@ const Statistics = ({ data, keyName, unit, useSameKey, showTotal, extremes }) =>
   mean = round(total / meanItems.length, 1)
 
   return (
-    <Box background={ComponentsTheme.chart.bg[colorMode]}>
+    <Box
+      background={ComponentsTheme.chart.bg[colorMode]}
+      fontFamily={ComponentsTheme.fonts.data}
+      fontSize="12px"
+    >
       <TableContainer>
-        <Table variant="striped" size="sm">
+        <Table variant="unstyled" size="sm">
           <Thead>
-            <Tr>
-              <Th>{t('realtime:ui.Min')}</Th>
-              <Th>{t('realtime:ui.Max')}</Th>
-              <Th>{t('realtime:ui.Mean')}</Th>
-              {showTotal && <Th>{t('realtime:ui.Total')}</Th>}
+            <Tr borderBottom="1px solid" borderColor={isDark ? 'rgba(16,185,129,0.1)' : 'rgba(0,0,0,0.06)'}>
+              <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#059669'} fontSize="10px">{t('realtime:ui.Min')}</Th>
+              <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#059669'} fontSize="10px">{t('realtime:ui.Max')}</Th>
+              <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#059669'} fontSize="10px">{t('realtime:ui.Mean')}</Th>
+              {showTotal && <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#059669'} fontSize="10px">{t('realtime:ui.Total')}</Th>}
             </Tr>
           </Thead>
           <Tbody>
             <Tr>
-              <Td>
+              <Td color={isDark ? 'gray.300' : 'gray.700'}>
                 {min} {unit} / {minDate}
               </Td>
-              <Td>
+              <Td color={isDark ? 'gray.300' : 'gray.700'}>
                 {max} {unit} / {maxDate}
               </Td>
-              <Td>
+              <Td color={isDark ? 'gray.300' : 'gray.700'}>
                 {mean} {unit}
               </Td>
               {showTotal && (
-                <Td>
+                <Td color={isDark ? 'gray.300' : 'gray.700'}>
                   {total} {unit}
                 </Td>
               )}

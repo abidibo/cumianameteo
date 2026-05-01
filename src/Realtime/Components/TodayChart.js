@@ -3,13 +3,12 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { defaultTo } from 'ramda'
 import { useTranslation } from 'react-i18next'
+import { useColorMode } from '@chakra-ui/react'
 
 import { withLoader } from '@Common/Utils/HOF'
 import config from '@Config'
-
 import { useTodayDataQuery } from '../Services/Api'
-import ComponentsTheme from '@Theme/Components'
-import { useColorMode } from '@chakra-ui/react'
+import { getChartTheme, mergeChartOptions } from '@Theme/HighchartsTheme'
 
 window.moment = dayjs
 
@@ -18,114 +17,40 @@ const TodayChart = () => {
   const { colorMode } = useColorMode()
   const { data } = useTodayDataQuery()
   const todayData = defaultTo([], data)
+  const theme = getChartTheme(colorMode)
 
-  let options = {
+  const makeYAxis = (titleText) =>
+    mergeChartOptions(theme.yAxis, { title: { text: titleText } })
+
+  let options = mergeChartOptions(theme, {
     chart: {
+      ...theme.chart,
       zooming: { type: 'x' },
       type: 'spline',
       height: '500px',
-      backgroundColor: ComponentsTheme.chart.bg[colorMode],
-      spacing: [40, 20, 20, 20],
     },
     colors: config.ui.chartColors,
     time: {
       timezoneOffset: new Date().getTimezoneOffset(),
     },
-    title: {
-      style: {
-        display: 'none',
-      },
-    },
     xAxis: {
+      ...theme.xAxis,
       type: 'datetime',
-      title: {
-        text: t('realtime:ui.Datetime'),
-      },
-      lineColor: ComponentsTheme.chart.gridColor[colorMode],
-      labels: {
-        style: {
-          color: '#aaa',
-        },
-      },
+      title: { text: t('realtime:ui.Datetime'), style: theme.xAxis.title.style },
     },
     yAxis: [
-      {
-        title: {
-          text: `${t('realtime:ui.Temperature')} (°C)`,
-        },
-        gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
-        labels: {
-          style: {
-            color: '#aaa',
-          },
-        },
-      },
-      {
-        title: {
-          text: `${t('realtime:ui.Pressure')} (hPa)`,
-        },
-        opposite: false,
-        gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
-        labels: {
-          style: {
-            color: '#aaa',
-          },
-        },
-      },
-      {
-        title: {
-          text: `${t('realtime:ui.RelativeHumidity')} (%)`,
-        },
-        min: 0,
-        opposite: true,
-        gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
-        labels: {
-          style: {
-            color: '#aaa',
-          },
-        },
-      },
-      {
-        title: {
-          text: `${t('realtime:ui.Rain')} (mm)`,
-        },
-        min: 0,
-        opposite: true,
-        gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
-        labels: {
-          style: {
-            color: '#aaa',
-          },
-        },
-      },
+      makeYAxis(`${t('realtime:ui.Temperature')} (°C)`),
+      { ...makeYAxis(`${t('realtime:ui.Pressure')} (hPa)`), opposite: false },
+      { ...makeYAxis(`${t('realtime:ui.RelativeHumidity')} (%)`), min: 0, opposite: true },
+      { ...makeYAxis(`${t('realtime:ui.Rain')} (mm)`), min: 0, opposite: true },
     ],
-    tooltip: {
-      shared: true,
-      crosshairs: true,
-    },
-    plotOptions: {
-      series: {
-        cursor: 'pointer',
-        marker: { lineWidth: 1, radius: 3 },
-      },
-    },
-    legend: {
-      layout: 'horizontal',
-      align: 'center',
-      verticalAlign: 'bottom',
-      itemStyle: {
-          color: '#aaa',
-      },
-    },
     series: [
       {
         name: t('realtime:ui.Temperature'),
         type: 'spline',
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.temperature)]),
         zIndex: 6,
-        tooltip: {
-          valueSuffix: '°C',
-        },
+        tooltip: { valueSuffix: '°C' },
       },
       {
         name: t('realtime:ui.Pressure'),
@@ -134,9 +59,7 @@ const TodayChart = () => {
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.pressure)]),
         dashStyle: 'Dash',
         zIndex: 3,
-        tooltip: {
-          valueSuffix: 'hPa',
-        },
+        tooltip: { valueSuffix: 'hPa' },
       },
       {
         name: t('realtime:ui.RelativeHumidity'),
@@ -145,9 +68,7 @@ const TodayChart = () => {
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.relative_humidity)]),
         dashStyle: 'Dash',
         zIndex: 3,
-        tooltip: {
-          valueSuffix: '%',
-        },
+        tooltip: { valueSuffix: '%' },
       },
       {
         name: t('realtime:ui.Rain'),
@@ -155,9 +76,7 @@ const TodayChart = () => {
         type: 'column',
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.rain_rate)]),
         zIndex: 1,
-        tooltip: {
-          valueSuffix: 'mm/h',
-        },
+        tooltip: { valueSuffix: 'mm/h' },
       },
       {
         name: t('realtime:ui.Accumulation'),
@@ -166,12 +85,10 @@ const TodayChart = () => {
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.rain)]),
         zIndex: 2,
         opacity: 0.3,
-        tooltip: {
-          valueSuffix: 'mm',
-        },
+        tooltip: { valueSuffix: 'mm' },
       },
     ],
-  }
+  })
 
   return withLoader(
     () => (

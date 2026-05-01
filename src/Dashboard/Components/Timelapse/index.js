@@ -6,48 +6,20 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  Text,
   Tooltip,
+  useColorMode,
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { curry } from 'ramda'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoCameraOutline, IoPauseOutline, IoPlayOutline } from 'react-icons/io5'
-import styled from 'styled-components'
 
 import Panel from '@Common/Components/Panel'
 import Logger from '@Common/Utils/Logger'
 import { round } from '@Common/Utils/Numbers'
-
-const Frame = styled(Box)`
-  // border-width: 5px;
-  position: relative;
-`
-
-const SpeedSlider = styled.div`
-  bottom: 1rem;
-  position: absolute !important;
-  left: 1rem;
-  width: 160px;
-  z-index: 1399;
-`
-
-const ProgressSlider = styled.div`
-  margin: 0 6px;
-`
-
-const StartButton = styled(Button)`
-  bottom: 1rem;
-  position: absolute !important;
-  right: 1rem;
-  z-index: 1399;
-`
-
-const FrameImage = styled(UiImage)`
-  left: 0;
-  position: absolute;
-  top: 0;
-`
+import ComponentsTheme from '@Theme/Components'
 
 const preloadImage = curry((cb, url) => {
   const image = new Image()
@@ -64,8 +36,34 @@ let intervalId
 const speedToInterval = (speed) => 300 - 2.9 * speed
 const speedToHz = (speed) => round(1000 / speedToInterval(speed), 1)
 
+const padFrame = (n) => String(n).padStart(3, '0')
+
+const sliderStyles = (isDark) => ({
+  sx: {
+    '& .chakra-slider__thumb': {
+      borderRadius: '2px',
+      w: '14px',
+      h: '14px',
+      border: '1px solid',
+      borderColor: isDark ? 'rgba(16,185,129,0.5)' : 'rgba(5,150,105,0.4)',
+      bg: isDark ? '#0d1420' : '#f4f6f8',
+      boxShadow: isDark ? '0 0 6px rgba(16,185,129,0.3)' : '0 0 4px rgba(0,0,0,0.1)',
+    },
+    '& .chakra-slider__filled-track': {
+      bg: isDark ? '#10B981' : '#059669',
+    },
+    '& .chakra-slider__track': {
+      bg: isDark ? 'rgba(16,185,129,0.12)' : 'rgba(0,0,0,0.1)',
+      h: '4px',
+      borderRadius: '0',
+    },
+  },
+})
+
 const Timelapse = ({ cover, imagesUrls }) => {
   const { t } = useTranslation()
+  const { colorMode } = useColorMode()
+  const isDark = colorMode === 'dark'
   const [isLoading, setIsLoading] = useState(true)
   const [status, setStatus] = useState(STOPPED)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -118,7 +116,6 @@ const Timelapse = ({ cover, imagesUrls }) => {
   }
 
   Logger.info('Timelapse status: ', status)
-  // eslint-disable-next-line no-console
 
   const tooltipLabels = {
     [STOPPED]: t('dashboard:ui.StartTimelapse'),
@@ -126,39 +123,79 @@ const Timelapse = ({ cover, imagesUrls }) => {
     [PAUSED]: t('dashboard:ui.ResumeTimelapse'),
   }
 
+  const isActive = status === PLAYING || status === PAUSED
+
   return (
     <Panel title={t('dashboard:ui.WebcamPanelTitle')} icon={<IoCameraOutline />}>
-      <ProgressSlider>
-        <Slider
-          value={round((currentIndex * 100) / maxIndex)}
-          colorScheme="blackAlpha"
-          onChange={(p) => setCurrentIndex(round((p * maxIndex) / 100))}
-          isDisabled={!(status === PLAYING || status === PAUSED)}
+      {/* Progress bar + frame counter */}
+      <Box display="flex" alignItems="center" gap={3} px={2} py={1}>
+        <Text
+          fontSize="11px"
+          fontFamily={ComponentsTheme.fonts.data}
+          color={isDark ? 'gray.500' : 'gray.400'}
+          letterSpacing="wider"
+          flexShrink={0}
+          minW="120px"
         >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-      </ProgressSlider>
-      <Frame borderColor="gray.100">
+          FRM {padFrame(isActive ? currentIndex + 1 : 0)} / {padFrame(imagesUrls.length)}
+        </Text>
+        <Box flex={1}>
+          <Slider
+            value={maxIndex > 0 ? round((currentIndex * 100) / maxIndex) : 0}
+            onChange={(p) => setCurrentIndex(round((p * maxIndex) / 100))}
+            isDisabled={!isActive}
+            {...sliderStyles(isDark)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        </Box>
+      </Box>
+
+      {/* Frame area */}
+      <Box position="relative" borderColor={isDark ? 'rgba(16,185,129,0.1)' : 'gray.100'}>
         <UiImage src={cover} style={{ zIndex: imagesUrls.length + 10 }} />
-        <Tooltip label={t('dashboard:ui.TimelapseSpeed')}>
-          <SpeedSlider>
+
+        {/* Speed slider */}
+        <Tooltip
+          label={t('dashboard:ui.TimelapseSpeed')}
+          placement="top"
+          bg={isDark ? '#0d1420' : '#f4f6f8'}
+          color={isDark ? '#10B981' : '#059669'}
+          borderRadius="2px"
+          border="1px solid"
+          borderColor={isDark ? 'rgba(16,185,129,0.2)' : 'rgba(0,0,0,0.1)'}
+          fontFamily={ComponentsTheme.fonts.data}
+          fontSize="xs"
+        >
+          <Box
+            position="absolute"
+            bottom="1rem"
+            left="1rem"
+            w="160px"
+            zIndex={1399}
+          >
             <Slider
               defaultValue={speed}
-              colorScheme="orange"
               onChangeEnd={setSpeed}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
+              {...sliderStyles(isDark)}
             >
               <SliderTrack>
                 <SliderFilledTrack />
               </SliderTrack>
               <Tooltip
                 hasArrow
-                bg="teal.500"
-                color="white"
+                bg={isDark ? '#0d1420' : '#f4f6f8'}
+                color={isDark ? '#F59E0B' : '#D97706'}
+                border="1px solid"
+                borderColor={isDark ? 'rgba(245,158,11,0.3)' : 'rgba(0,0,0,0.1)'}
+                borderRadius="2px"
+                fontFamily={ComponentsTheme.fonts.data}
+                fontSize="xs"
                 placement="top"
                 isOpen={showTooltip}
                 label={`${speedToHz(speed)} Hz`}
@@ -166,24 +203,72 @@ const Timelapse = ({ cover, imagesUrls }) => {
                 <SliderThumb />
               </Tooltip>
             </Slider>
-          </SpeedSlider>
+          </Box>
         </Tooltip>
-        <Tooltip label={tooltipLabels[status]}>
-          <StartButton size="sm" colorScheme="orange" isLoading={isLoading} onClick={handleStatusChange}>
-            {status === STOPPED && <IoPlayOutline size={26} />}
-            {status === PAUSED && <IoPlayOutline size={26} />}
-            {status === PLAYING && <IoPauseOutline size={26} />}
+
+        {/* Play/Pause button */}
+        <Tooltip
+          label={tooltipLabels[status]}
+          placement="top"
+          bg={isDark ? '#0d1420' : '#f4f6f8'}
+          color={isDark ? '#F59E0B' : '#D97706'}
+          borderRadius="2px"
+          border="1px solid"
+          borderColor={isDark ? 'rgba(245,158,11,0.3)' : 'rgba(0,0,0,0.1)'}
+          fontFamily={ComponentsTheme.fonts.data}
+          fontSize="xs"
+        >
+          <Button
+            size="sm"
+            position="absolute"
+            bottom="1rem"
+            right="1rem"
+            zIndex={1399}
+            isLoading={isLoading}
+            onClick={handleStatusChange}
+            borderRadius="2px"
+            bg={isDark ? 'rgba(245,158,11,0.15)' : 'rgba(245,158,11,0.1)'}
+            color={isDark ? '#F59E0B' : '#D97706'}
+            border="1px solid"
+            borderColor={isDark ? 'rgba(245,158,11,0.3)' : 'rgba(217,119,6,0.3)'}
+            fontFamily={ComponentsTheme.fonts.data}
+            fontSize="xs"
+            letterSpacing="wider"
+            textTransform="uppercase"
+            _hover={{
+              bg: isDark ? 'rgba(245,158,11,0.25)' : 'rgba(245,158,11,0.2)',
+              boxShadow: isDark ? '0 0 12px rgba(245,158,11,0.2)' : '0 0 8px rgba(245,158,11,0.15)',
+            }}
+            _active={{
+              bg: isDark ? 'rgba(245,158,11,0.35)' : 'rgba(245,158,11,0.3)',
+            }}
+            leftIcon={
+              status === PLAYING
+                ? <IoPauseOutline size={16} />
+                : <IoPlayOutline size={16} />
+            }
+          >
             {status === STOPPED && tooltipLabels[status]}
-          </StartButton>
+          </Button>
         </Tooltip>
+
+        {/* Frames */}
         {!isLoading &&
           imagesUrls.map((url, index) => {
-            const visibility =
-              (status === PLAYING || status === PAUSED) && index === currentIndex ? 'visible' : 'hidden'
+            const visibility = isActive && index === currentIndex ? 'visible' : 'hidden'
             const zIndex = index + 1
-            return <FrameImage key={index} src={url} style={{ zIndex, visibility }} />
+            return (
+              <UiImage
+                key={index}
+                src={url}
+                position="absolute"
+                left={0}
+                top={0}
+                style={{ zIndex, visibility }}
+              />
+            )
           })}
-      </Frame>
+      </Box>
     </Panel>
   )
 }

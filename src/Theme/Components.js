@@ -1,34 +1,54 @@
 const ComponentsTheme = {
+  fonts: {
+    data: `'Share Tech Mono', 'SF Mono', Consolas, monospace`,
+    heading: `'Bebas Neue', sans-serif`,
+  },
   navbar: {
     bg: {
-      light: 'gray.100',
-      dark: 'blackAlpha.500',
-    }
+      light: 'rgba(244,246,248,0.95)',
+      dark: 'rgba(8,12,20,0.95)',
+    },
+    borderColor: {
+      light: 'rgba(0,0,0,0.08)',
+      dark: 'rgba(16,185,129,0.15)',
+    },
   },
   footer: {
     bg: {
-      light: 'gray.100',
-      dark: 'blackAlpha.500',
-    }
+      light: 'rgba(244,246,248,0.95)',
+      dark: 'rgba(8,12,20,0.95)',
+    },
   },
   chart: {
     bg: {
-      light: '#fff',
-      dark: '#0d2221',
+      light: '#f4f6f8',
+      dark: '#080c14',
     },
     gridColor: {
-      light: '#ddd',
-      dark: '#333',
-    }
+      light: 'rgba(0,0,0,0.08)',
+      dark: 'rgba(16,185,129,0.06)',
+    },
   },
   panel: {
+    bg: {
+      light: '#f4f6f8',
+      dark: 'rgba(13,20,32,0.95)',
+    },
+    border: {
+      light: 'rgba(0,0,0,0.08)',
+      dark: 'rgba(16,185,129,0.12)',
+    },
     heading: {
       bg: {
-        light: 'gray.100',
-        dark: 'blackAlpha.400',
-      }
-    }
-  }
+        light: 'rgba(0,0,0,0.03)',
+        dark: 'rgba(16,185,129,0.04)',
+      },
+      color: {
+        light: '#059669',
+        dark: '#10B981',
+      },
+    },
+  },
 }
 
 export default ComponentsTheme

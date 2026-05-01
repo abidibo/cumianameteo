@@ -4,12 +4,11 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { defaultTo } from 'ramda'
 import { useTranslation } from 'react-i18next'
+import { useColorMode } from '@chakra-ui/react'
 
 import { withLoader } from '@Common/Utils/HOF'
-
 import { useTodayDataQuery } from '../Services/Api'
-import ComponentsTheme from '@Theme/Components'
-import { useColorMode } from '@chakra-ui/react'
+import { getChartTheme, mergeChartOptions } from '@Theme/HighchartsTheme'
 
 window.moment = dayjs
 
@@ -18,74 +17,36 @@ const TodaySingleChart = ({ label, unit, keyName, color, type }) => {
   const { colorMode } = useColorMode()
   const { data } = useTodayDataQuery()
   const todayData = defaultTo([], data)
+  const theme = getChartTheme(colorMode)
 
-  let options = {
+  let options = mergeChartOptions(theme, {
     chart: {
+      ...theme.chart,
       zooming: { type: 'x' },
       type,
       height: '300px',
-      backgroundColor: ComponentsTheme.chart.bg[colorMode],
-      spacing: [40, 20, 20, 20],
     },
     time: {
       timezoneOffset: new Date().getTimezoneOffset(),
     },
-    title: {
-      style: {
-        display: 'none',
-      },
-    },
     xAxis: {
+      ...theme.xAxis,
       type: 'datetime',
-      title: {
-        text: t('realtime:ui.Datetime'),
-      },
-      lineColor: ComponentsTheme.chart.gridColor[colorMode],
-      labels: {
-        style: {
-          color: '#aaa',
-        },
-      },
+      title: { text: t('realtime:ui.Datetime'), style: theme.xAxis.title.style },
     },
     yAxis: [
-      {
-        title: {
-          text: `${label} (${unit})`,
-        },
-        gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
-        labels: {
-          style: {
-            color: '#aaa',
-          },
-        },
-      },
+      mergeChartOptions(theme.yAxis, { title: { text: `${label} (${unit})` } }),
     ],
-    plotOptions: {
-      series: {
-        cursor: 'pointer',
-        marker: { lineWidth: 1, radius: 3 },
-      },
-    },
-    legend: {
-      layout: 'horizontal',
-      align: 'center',
-      verticalAlign: 'bottom',
-      itemStyle: {
-          color: '#aaa',
-      },
-    },
     series: [
       {
         name: label,
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d[keyName])]),
         color,
         zIndex: 6,
-        tooltip: {
-          valueSuffix: unit,
-        },
+        tooltip: { valueSuffix: unit },
       },
     ],
-  }
+  })
 
   return withLoader(
     () => (

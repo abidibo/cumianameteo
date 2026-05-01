@@ -1,7 +1,9 @@
-import { Alert, AlertIcon, Box, Flex, FormControl, FormLabel, Input, SimpleGrid } from '@chakra-ui/react'
+import { Box, Flex, FormControl, FormLabel, Input, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IoInformationCircleOutline } from 'react-icons/io5'
+import { WiBarometer, WiHumidity, WiRain, WiThermometer } from 'react-icons/wi'
 
 import Panel from '@Common/Components/Panel'
 import { toast } from '@Common/Components/Toast'
@@ -11,14 +13,15 @@ import config from '@Config'
 import DataHistorySingleChart from '@Realtime/Components/DataHistorySingleChart'
 import Statistics from '@Realtime/Components/Statistics'
 import { useHistoryDataQuery } from '@Realtime/Services/Api'
-
-// import i18n from 'i18n'
+import ComponentsTheme from '@Theme/Components'
 
 const DFT_FROM = parseInt(dayjs().subtract(1, 'months').valueOf() / 1e3)
 const DFT_TO = parseInt(dayjs().valueOf() / 1e3)
 
 const DataHistoryView = () => {
   const { t } = useTranslation()
+  const { colorMode } = useColorMode()
+  const isDark = colorMode === 'dark'
   const [fromDate, setFromDate] = useState(DFT_FROM)
   const [toDate, setToDate] = useState(DFT_TO)
   const [extremes, setExtremes] = useState([DFT_FROM, DFT_TO])
@@ -67,29 +70,85 @@ const DataHistoryView = () => {
     }
   }
 
+  const inputStyles = {
+    borderRadius: '2px',
+    fontFamily: ComponentsTheme.fonts.data,
+    fontSize: 'sm',
+    bg: isDark ? 'rgba(8,12,20,0.8)' : 'white',
+    borderColor: isDark ? 'rgba(16,185,129,0.2)' : 'rgba(0,0,0,0.15)',
+    color: isDark ? 'gray.200' : 'gray.700',
+    _hover: { borderColor: isDark ? 'rgba(16,185,129,0.4)' : 'rgba(0,0,0,0.3)' },
+    _focus: {
+      borderColor: isDark ? '#10B981' : '#059669',
+      boxShadow: isDark ? '0 0 0 1px rgba(16,185,129,0.3)' : '0 0 0 1px rgba(5,150,105,0.3)',
+    },
+  }
+
+  const labelStyles = {
+    fontFamily: ComponentsTheme.fonts.heading,
+    fontSize: 'xs',
+    textTransform: 'uppercase',
+    letterSpacing: 'widest',
+    fontWeight: '600',
+    color: isDark ? '#10B981' : '#059669',
+  }
+
+  const dateRangeLabel = (
+    <Text
+      as="span"
+      fontFamily={ComponentsTheme.fonts.data}
+      fontSize="xs"
+      color={isDark ? 'gray.500' : 'gray.400'}
+      letterSpacing="wider"
+    >
+      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm')} / {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm')}
+    </Text>
+  )
+
   return (
     <BaseLayout>
       <Box p={5} gap="1rem">
         <Panel title={t('ui.DataHistory')}>
-          <Alert status="info">
-            <AlertIcon />
-            {t('realtime:ui.DataCollectedFrom')}
-          </Alert>
-          <SimpleGrid columns={{ sm: 1, md: 2, lg: 2 }} spacing={4} marginTop="1rem">
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={3}
+            p={3}
+            borderRadius="2px"
+            bg={isDark ? 'rgba(16,185,129,0.06)' : 'rgba(5,150,105,0.06)'}
+            border="1px solid"
+            borderColor={isDark ? 'rgba(16,185,129,0.12)' : 'rgba(5,150,105,0.12)'}
+            mb={4}
+          >
+            <Box color={isDark ? '#10B981' : '#059669'} flexShrink={0}>
+              <IoInformationCircleOutline size={18} />
+            </Box>
+            <Text
+              fontFamily={ComponentsTheme.fonts.data}
+              fontSize="xs"
+              letterSpacing="wider"
+              color={isDark ? 'gray.400' : 'gray.600'}
+            >
+              {t('realtime:ui.DataCollectedFrom')}
+            </Text>
+          </Box>
+          <SimpleGrid columns={{ sm: 1, md: 2, lg: 2 }} spacing={4}>
             <FormControl>
-              <FormLabel>{t('realtime:ui.From')}</FormLabel>
+              <FormLabel {...labelStyles}>{t('realtime:ui.From')}</FormLabel>
               <Input
                 type="date"
                 value={dayjs(fromDate * 1e3).format('YYYY-MM-DD')}
                 onChange={(e) => e.target.value && handleChangeFrom(e, dayjs(e.target.value))}
+                {...inputStyles}
               />
             </FormControl>
             <FormControl>
-              <FormLabel>{t('realtime:ui.To')}</FormLabel>
+              <FormLabel {...labelStyles}>{t('realtime:ui.To')}</FormLabel>
               <Input
                 type="date"
                 value={dayjs(toDate * 1e3).format('YYYY-MM-DD')}
                 onChange={(e) => e.target.value && handleChangeTo(e, dayjs(e.target.value))}
+                {...inputStyles}
               />
             </FormControl>
           </SimpleGrid>
@@ -98,13 +157,11 @@ const DataHistoryView = () => {
           () => (
             <Box marginTop="2rem">
               <Panel
+                icon={<WiThermometer size={20} />}
                 title={
-                  <Flex alignItems={'center'} justifyContent="space-between" width="100%" wrap={'wrap'}>
+                  <Flex alignItems="center" justifyContent="space-between" width="100%" wrap="wrap" gap={2}>
                     <span>{t('realtime:ui.Temperature')}</span>
-                    <small>
-                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm')} /{' '}
-                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm')}
-                    </small>
+                    {dateRangeLabel}
                   </Flex>
                 }
                 boxProps={{ marginBottom: 4 }}
@@ -139,13 +196,11 @@ const DataHistoryView = () => {
               </Panel>
 
               <Panel
+                icon={<WiBarometer size={20} />}
                 title={
-                  <Flex alignItems={'center'} justifyContent="space-between" width="100%" wrap={'wrap'}>
+                  <Flex alignItems="center" justifyContent="space-between" width="100%" wrap="wrap" gap={2}>
                     <span>{t('realtime:ui.Pressure')}</span>
-                    <small>
-                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm')} /{' '}
-                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm')}
-                    </small>
+                    {dateRangeLabel}
                   </Flex>
                 }
                 boxProps={{ marginBottom: 4 }}
@@ -180,13 +235,11 @@ const DataHistoryView = () => {
               </Panel>
 
               <Panel
+                icon={<WiHumidity size={20} />}
                 title={
-                  <Flex alignItems={'center'} justifyContent="space-between" width="100%" wrap={'wrap'}>
+                  <Flex alignItems="center" justifyContent="space-between" width="100%" wrap="wrap" gap={2}>
                     <span>{t('realtime:ui.RelativeHumidity')}</span>
-                    <small>
-                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm')} /{' '}
-                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm')}
-                    </small>
+                    {dateRangeLabel}
                   </Flex>
                 }
                 boxProps={{ marginBottom: 4 }}
@@ -221,13 +274,11 @@ const DataHistoryView = () => {
               </Panel>
 
               <Panel
+                icon={<WiRain size={20} />}
                 title={
-                  <Flex alignItems={'center'} justifyContent="space-between" width="100%" wrap={'wrap'}>
+                  <Flex alignItems="center" justifyContent="space-between" width="100%" wrap="wrap" gap={2}>
                     <span>{t('realtime:ui.Rain')}</span>
-                    <small>
-                      {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm')} /{' '}
-                      {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm')}
-                    </small>
+                    {dateRangeLabel}
                   </Flex>
                 }
               >

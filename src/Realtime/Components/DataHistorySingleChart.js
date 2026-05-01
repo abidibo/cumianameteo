@@ -8,7 +8,7 @@ import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { withLoader } from '@Common/Utils/HOF'
-import ComponentsTheme from '@Theme/Components'
+import { getChartTheme, mergeChartOptions } from '@Theme/HighchartsTheme'
 
 window.moment = dayjs
 
@@ -36,9 +36,9 @@ const DataHistorySingleChart = ({
 }) => {
   const { t } = useTranslation()
   const { colorMode } = useColorMode()
+  const theme = getChartTheme(colorMode)
 
   const updateAllOtherChartsExtremes = useCallback(({ min, max }) => {
-    // update all other charts extremes
     forEachObjIndexed((r) => {
       if (r?.chart !== keyName) {
         r?.chart.xAxis[0].setExtremes(min, max)
@@ -58,7 +58,7 @@ const DataHistorySingleChart = ({
     if (controllingChart === keyName) {
       setExtremes([parseInt(evt.min / 1e3), parseInt(evt.max / 1e3)])
       updateAllOtherChartsExtremes(evt)
-      if (isNil(evt.userMax)) { // reset zoom
+      if (isNil(evt.userMax)) {
         setControllingChart(null)
       }
     }
@@ -79,9 +79,7 @@ const DataHistorySingleChart = ({
       data: dataMean,
       color: colorMean,
       zIndex: 6,
-      tooltip: {
-        valueSuffix: unit,
-      },
+      tooltip: { valueSuffix: unit },
     })
   }
   if (labelMin) {
@@ -90,9 +88,7 @@ const DataHistorySingleChart = ({
       data: dataMin,
       color: colorMin,
       zIndex: 6,
-      tooltip: {
-        valueSuffix: unit,
-      },
+      tooltip: { valueSuffix: unit },
     })
   }
   if (labelMax) {
@@ -101,9 +97,7 @@ const DataHistorySingleChart = ({
       data: dataMax,
       color: colorMax,
       zIndex: 6,
-      tooltip: {
-        valueSuffix: unit,
-      },
+      tooltip: { valueSuffix: unit },
     })
   }
 
@@ -115,77 +109,29 @@ const DataHistorySingleChart = ({
       color: colorAccumulation,
       opacity: .5,
       zIndex: 5,
-      tooltip: {
-        valueSuffix: unit,
-      },
+      tooltip: { valueSuffix: unit },
     })
   }
 
-  let options = {
+  let options = mergeChartOptions(theme, {
     chart: {
+      ...theme.chart,
       zooming: { type: 'x' },
       type,
       height: '400px',
-      backgroundColor: ComponentsTheme.chart.bg[colorMode],
-      spacing: [40, 20, 20, 20],
-      events: {
-        selection: onZoomChange,
-      },
-    },
-    title: {
-      style: {
-        display: 'none',
-      },
+      events: { selection: onZoomChange },
     },
     xAxis: {
+      ...theme.xAxis,
       type: 'datetime',
-      title: {
-        text: t('realtime:ui.Datetime'),
-      },
-      lineColor: ComponentsTheme.chart.gridColor[colorMode],
-      labels: {
-        style: {
-          color: '#aaa',
-        },
-      },
-      events: {
-        afterSetExtremes: onAfterSetExtremes,
-      },
+      title: { text: t('realtime:ui.Datetime'), style: theme.xAxis.title.style },
+      events: { afterSetExtremes: onAfterSetExtremes },
     },
     yAxis: [
-      {
-        title: {
-          text: `${label} (${unit})`,
-        },
-        gridLineColor: ComponentsTheme.chart.gridColor[colorMode],
-        labels: {
-          style: {
-            color: '#aaa',
-          },
-        },
-      },
+      mergeChartOptions(theme.yAxis, { title: { text: `${label} (${unit})` } }),
     ],
-    plotOptions: {
-      series: {
-        cursor: 'pointer',
-        marker: { lineWidth: 1, radius: 3 },
-      },
-    },
-    legend: {
-      layout: 'horizontal',
-      align: 'center',
-      verticalAlign: 'bottom',
-      itemStyle: {
-        color: '#aaa',
-      },
-    },
-    tooltip: {
-      shared: true,
-      crosshairs: true,
-    },
     series,
-  }
-  console.log('OPTIONS', options) // eslint-disable-line
+  })
 
   return withLoader(
     () => (
