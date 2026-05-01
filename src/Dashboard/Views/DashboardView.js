@@ -74,7 +74,7 @@ const DashboardView = () => {
       >
         {/* Row 1: Hero temperature + Instruments */}
         <MotionBox variants={fadeUp}>
-          <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={4} alignItems="start">
+          <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={4} alignItems="stretch">
             <HeroTemperature />
             <CurrentData />
           </SimpleGrid>

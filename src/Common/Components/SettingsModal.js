@@ -8,11 +8,18 @@ import EventDispatcher from '@Common/Services/EventDispatcher'
 import ComponentsTheme from '@Theme/Components'
 import Field from './Field'
 
+const SUPPORTED_LOCALES = ['it', 'en']
+
+const normalizeLocale = (locale) => {
+  const language = (locale || '').split(/[-_]/)[0]
+  return SUPPORTED_LOCALES.includes(language) ? language : 'en'
+}
+
 const SettingsModal = ({ onClose }) => {
   const { t, i18n } = useTranslation()
   const { colorMode, setColorMode } = useColorMode()
   const isDark = colorMode === 'dark'
-  const { fields, setField } = useForm({ locale: i18n.language, colorMode })
+  const { fields, setField } = useForm({ locale: normalizeLocale(i18n.resolvedLanguage || i18n.language), colorMode })
 
   const handleSubmit = () => {
     i18n.changeLanguage(fields.locale)

@@ -8,6 +8,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   plugins: [react({ include: /\.(jsx|js)$/ }), cesium()],
+  server: {
+    proxy: {
+      '/radar-dpc': {
+        target: 'https://radar-geowebcache.protezionecivile.it',
+        changeOrigin: true,
+        rewrite: (urlPath) => urlPath.replace(/^\/radar-dpc/, ''),
+      },
+    },
+  },
   optimizeDeps: {
     esbuildOptions: {
       loader: { '.js': 'jsx' },

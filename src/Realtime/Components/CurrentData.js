@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react'
 import { Box, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useCurrentDataQuery } from '@Realtime/Services/Api'
+import { useCurrentDataQuery, useTodayDataQuery } from '@Realtime/Services/Api'
 import { windDirection } from '@Realtime/Utils/Wind'
 import dayjs from 'dayjs'
 import PropTypes from 'prop-types'
@@ -21,6 +21,13 @@ const radarSweep = keyframes`
   100% { transform: rotate(360deg); }
 `
 
+const sparkSweep = keyframes`
+  0% { transform: translateX(-16px); opacity: 0; }
+  18% { opacity: 0.85; }
+  82% { opacity: 0.85; }
+  100% { transform: translateX(100%); opacity: 0; }
+`
+
 const COLORS = {
   datetime: '#06B6D4',
   temperature: '#EF4444',
@@ -31,7 +38,91 @@ const COLORS = {
   wind: '#F59E0B',
 }
 
-const StatCard = ({ icon, label, color, isDark, children, value, unit, min, max }) => {
+const getTrendValues = (items, keyName) => (items || [])
+  .map((item) => parseFloat(item[keyName]))
+  .filter(Number.isFinite)
+  .slice(-36)
+
+const makeSparklinePoints = (values, width, height) => {
+  if (!values || values.length < 2) return ''
+
+  const min = Math.min(...values)
+  const max = Math.max(...values)
+  const range = max - min || 1
+  const step = width / (values.length - 1)
+
+  return values
+    .map((value, index) => {
+      const x = index * step
+      const y = height - ((value - min) / range) * height
+      return `${x.toFixed(2)},${y.toFixed(2)}`
+    })
+    .join(' ')
+}
+
+const TrendSparkline = ({ values, color, isDark }) => {
+  const width = 120
+  const height = 26
+  const points = makeSparklinePoints(values, width, height)
+  if (!points) return null
+
+  const delta = values[values.length - 1] - values[0]
+  const trendColor = delta > 0 ? '#10B981' : delta < 0 ? '#EF4444' : color
+
+  return (
+    <Box
+      mt={3}
+      pt={2}
+      borderTop="1px solid"
+      borderColor={isDark ? 'rgba(255,255,255,0.06)' : 'rgba(14,116,144,0.11)'}
+      position="relative"
+      overflow="hidden"
+    >
+      <Box
+        position="absolute"
+        top={0}
+        bottom={0}
+        left={0}
+        w="16px"
+        bg={`linear-gradient(90deg, transparent, ${color}33, transparent)`}
+        animation={`${sparkSweep} 4.5s ease-in-out infinite`}
+        pointerEvents="none"
+      />
+      <Box display="flex" alignItems="center" justifyContent="space-between" gap={2}>
+        <Box as="svg" viewBox={`0 0 ${width} ${height}`} h="30px" flex={1} preserveAspectRatio="none">
+          <polyline
+            fill="none"
+            stroke={color}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            points={points}
+            opacity={isDark ? 0.95 : 0.9}
+          />
+        </Box>
+        <Text
+          fontFamily={ComponentsTheme.fonts.data}
+          fontSize="10px"
+          color={trendColor}
+          letterSpacing="wider"
+          minW="42px"
+          textAlign="right"
+        >
+          {delta > 0 ? '+' : ''}{delta.toFixed(1)}
+        </Text>
+      </Box>
+    </Box>
+  )
+}
+
+TrendSparkline.propTypes = {
+  color: PropTypes.string,
+  isDark: PropTypes.bool,
+  values: PropTypes.arrayOf(PropTypes.number),
+}
+
+const StatCard = ({ icon, label, color, isDark, children, value, unit, min, max, trendValues, boxProps }) => {
   const numValue = parseFloat(value)
   const numMin = parseFloat(min)
   const numMax = parseFloat(max)
@@ -54,6 +145,10 @@ const StatCard = ({ icon, label, color, isDark, children, value, unit, min, max 
       p={4}
       position="relative"
       overflow="hidden"
+      h="100%"
+      minH={{ base: 'auto', xl: '154px' }}
+      display="flex"
+      flexDirection="column"
       boxShadow={isDark ? '0 4px 20px rgba(0,0,0,0.3)' : '0 6px 16px rgba(15,39,55,0.08)'}
       transition="box-shadow 0.2s"
       _hover={{
@@ -70,6 +165,7 @@ const StatCard = ({ icon, label, color, isDark, children, value, unit, min, max 
         height: '1px',
         background: `linear-gradient(90deg, ${color}, transparent 70%)`,
       }}
+      {...boxProps}
     >
       <Box display="flex" alignItems="center" gap={2} mb={3}>
         <Box
@@ -144,6 +240,10 @@ const StatCard = ({ icon, label, color, isDark, children, value, unit, min, max 
           </Box>
         </Box>
       )}
+
+      <Box mt="auto">
+        <TrendSparkline values={trendValues} color={color} isDark={isDark} />
+      </Box>
     </Box>
   )
 }
@@ -158,12 +258,15 @@ StatCard.propTypes = {
   unit: PropTypes.string,
   min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  trendValues: PropTypes.arrayOf(PropTypes.number),
+  boxProps: PropTypes.object,
 }
 
 export const HeroTemperature = () => {
   const { t } = useTranslation()
   const { colorMode } = useColorMode()
   const { data, isFetching } = useCurrentDataQuery()
+  const { data: todayData } = useTodayDataQuery()
   const [now, setNow] = useState(() => dayjs())
   const isDark = colorMode === 'dark'
   const panelBg = isDark ? 'rgba(13,20,32,0.95)' : ComponentsTheme.panel.bg.light
@@ -181,6 +284,7 @@ export const HeroTemperature = () => {
   return withLoader(
     () => {
       const lastSample = dayjs(data.datetime)
+      const temperatureTrendValues = getTrendValues(todayData, 'temperature')
 
       return (
         <Box
@@ -325,8 +429,10 @@ export const HeroTemperature = () => {
             </Text>
           </Box>
 
+          <TrendSparkline values={temperatureTrendValues} color={COLORS.temperature} isDark={isDark} />
+
           {/* Compact secondary readings */}
-          <SimpleGrid columns={3} spacing={3}>
+          <SimpleGrid columns={3} spacing={3} mt={5}>
             <Box>
               <Text fontSize="xs" textTransform="uppercase" letterSpacing="wider" fontFamily={ComponentsTheme.fonts.heading} color={muted} mb={1}>
                 {t('realtime:ui.Pressure')}
@@ -366,13 +472,14 @@ const CurrentData = () => {
   const { t } = useTranslation()
   const { colorMode } = useColorMode()
   const { data, isFetching } = useCurrentDataQuery()
+  const { data: todayData } = useTodayDataQuery()
   const isDark = colorMode === 'dark'
   const ink = isDark ? 'white' : '#10202C'
   const muted = isDark ? 'gray.400' : '#526575'
 
   return withLoader(
     () => (
-      <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 5 }} spacing={3} alignSelf="start" alignItems="start">
+      <SimpleGrid columns={{ base: 1, sm: 2, md: 3, xl: 6 }} spacing={3} alignSelf="stretch" alignItems="stretch" h="100%">
         {/* Pressure */}
         <StatCard
           icon={<WiBarometer size={22} />}
@@ -383,6 +490,8 @@ const CurrentData = () => {
           unit="hPa"
           min={data.pressure_min}
           max={data.pressure_max}
+          trendValues={getTrendValues(todayData, 'pressure')}
+          boxProps={{ gridColumn: { xl: 'span 2' } }}
         />
 
         {/* Humidity */}
@@ -395,6 +504,8 @@ const CurrentData = () => {
           unit="%"
           min={data.relative_humidity_min}
           max={data.relative_humidity_max}
+          trendValues={getTrendValues(todayData, 'relative_humidity')}
+          boxProps={{ gridColumn: { xl: 'span 2' } }}
         />
 
         {/* Dewpoint */}
@@ -407,10 +518,19 @@ const CurrentData = () => {
           unit="°C"
           min={data.dewpoint_min}
           max={data.dewpoint_max}
+          trendValues={getTrendValues(todayData, 'dewpoint')}
+          boxProps={{ gridColumn: { xl: 'span 2' } }}
         />
 
         {/* Rain */}
-        <StatCard icon={<WiRain size={22} />} label={t('realtime:ui.Rain')} color={COLORS.rain} isDark={isDark}>
+        <StatCard
+          icon={<WiRain size={22} />}
+          label={t('realtime:ui.Rain')}
+          color={COLORS.rain}
+          isDark={isDark}
+          trendValues={getTrendValues(todayData, 'rain_rate')}
+          boxProps={{ gridColumn: { xl: 'span 3' } }}
+        >
           <Text fontSize="3xl" fontWeight="bold" fontFamily={ComponentsTheme.fonts.data} color={ink} lineHeight={1}
             textShadow={isDark ? `0 0 12px ${COLORS.rain}30` : 'none'}
           >
@@ -425,7 +545,14 @@ const CurrentData = () => {
         </StatCard>
 
         {/* Wind */}
-        <StatCard icon={<WiWindy size={22} />} label={t('realtime:ui.Wind')} color={COLORS.wind} isDark={isDark}>
+        <StatCard
+          icon={<WiWindy size={22} />}
+          label={t('realtime:ui.Wind')}
+          color={COLORS.wind}
+          isDark={isDark}
+          trendValues={getTrendValues(todayData, 'wind_strength')}
+          boxProps={{ gridColumn: { xl: 'span 3' } }}
+        >
           <Text fontSize="3xl" fontWeight="bold" fontFamily={ComponentsTheme.fonts.data} color={ink} lineHeight={1}
             textShadow={isDark ? `0 0 12px ${COLORS.wind}30` : 'none'}
           >
