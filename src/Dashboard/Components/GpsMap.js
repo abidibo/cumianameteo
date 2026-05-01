@@ -21,7 +21,7 @@ const GpsMap = ({ lat, lng, alt }) => {
     if (!wrapper || viewerRef.current) return
 
     const cesiumDiv = document.createElement('div')
-    cesiumDiv.style.cssText = 'width:100%;height:100%;'
+    cesiumDiv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:0;'
     wrapper.appendChild(cesiumDiv)
     cesiumContainerRef.current = cesiumDiv
 
@@ -130,18 +130,17 @@ const GpsMap = ({ lat, lng, alt }) => {
     if (isDark) {
       viewer.scene.globe.baseColor = Cesium.Color.fromCssColorString('#080c14')
       viewer.scene.backgroundColor = Cesium.Color.fromCssColorString('#080c14')
-      // viewer.imageryLayers.get(0).brightness = 0.4
-      // viewer.imageryLayers.get(0).contrast = 1.3
-      // viewer.imageryLayers.get(0).saturation = 0.3
-      viewer.imageryLayers.get(0).brightness = 1.0
-      viewer.imageryLayers.get(0).contrast = 1.0
-      viewer.imageryLayers.get(0).saturation = 1.0
+      viewer.imageryLayers.get(0).brightness = 0.72
+      viewer.imageryLayers.get(0).contrast = 1.22
+      viewer.imageryLayers.get(0).saturation = 0.68
+      viewer.imageryLayers.get(0).gamma = 0.92
     } else {
       viewer.scene.globe.baseColor = Cesium.Color.WHITE
-      viewer.scene.backgroundColor = Cesium.Color.fromCssColorString('#e8ecf0')
+      viewer.scene.backgroundColor = Cesium.Color.fromCssColorString('#E2ECF1')
       viewer.imageryLayers.get(0).brightness = 1.0
       viewer.imageryLayers.get(0).contrast = 1.0
       viewer.imageryLayers.get(0).saturation = 1.0
+      viewer.imageryLayers.get(0).gamma = 1.0
     }
   }, [isDark])
 
@@ -157,8 +156,19 @@ const GpsMap = ({ lat, lng, alt }) => {
         sx={{ aspectRatio: '16 / 10' }}
         position="relative"
         overflow="hidden"
-        bg={isDark ? '#080c14' : '#e8ecf0'}
-      />
+        bg={isDark ? '#080c14' : '#E2ECF1'}
+      >
+        {isDark && (
+          <Box
+            position="absolute"
+            inset={0}
+            zIndex={1}
+            pointerEvents="none"
+            bg="linear-gradient(180deg, rgba(8,12,20,0.08), rgba(8,12,20,0.2)), linear-gradient(90deg, rgba(16,185,129,0.08), transparent 45%, rgba(6,182,212,0.06))"
+            boxShadow="inset 0 0 80px rgba(8,12,20,0.28)"
+          />
+        )}
+      </Box>
     </Panel>
   )
 }

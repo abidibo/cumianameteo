@@ -25,13 +25,13 @@ const SettingsModal = ({ onClose }) => {
     borderRadius: '2px',
     fontFamily: ComponentsTheme.fonts.data,
     fontSize: 'sm',
-    bg: isDark ? 'rgba(8,12,20,0.8)' : 'white',
-    borderColor: isDark ? 'rgba(16,185,129,0.2)' : 'rgba(0,0,0,0.15)',
-    color: isDark ? 'gray.200' : 'gray.700',
-    _hover: { borderColor: isDark ? 'rgba(16,185,129,0.4)' : 'rgba(0,0,0,0.3)' },
+    bg: isDark ? 'rgba(8,12,20,0.8)' : '#FFFFFF',
+    borderColor: isDark ? 'rgba(16,185,129,0.2)' : 'rgba(14,116,144,0.22)',
+    color: isDark ? 'gray.200' : '#10202C',
+    _hover: { borderColor: isDark ? 'rgba(16,185,129,0.4)' : 'rgba(14,116,144,0.38)' },
     _focus: {
-      borderColor: isDark ? '#10B981' : '#059669',
-      boxShadow: isDark ? '0 0 0 1px rgba(16,185,129,0.3)' : '0 0 0 1px rgba(5,150,105,0.3)',
+      borderColor: isDark ? '#10B981' : '#0E7490',
+      boxShadow: isDark ? '0 0 0 1px rgba(16,185,129,0.3)' : '0 0 0 1px rgba(14,116,144,0.3)',
     },
   }
 

@@ -74,7 +74,7 @@ const DashboardView = () => {
       >
         {/* Row 1: Hero temperature + Instruments */}
         <MotionBox variants={fadeUp}>
-          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={4} alignItems="stretch">
+          <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={4} alignItems="start">
             <HeroTemperature />
             <CurrentData />
           </SimpleGrid>
@@ -82,7 +82,7 @@ const DashboardView = () => {
 
         {/* Row 2: Timelapse + Globe */}
         <MotionBox variants={fadeUp}>
-          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={4} alignItems="stretch">
+          <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={4} alignItems="stretch">
             <Box display="flex" flexDirection="column">
               <Timelapse imagesUrls={imagesUrls} cover="https://cumiana.cam.torinometeo.org/24h/28/last.jpg?1924161112" />
             </Box>
@@ -104,16 +104,16 @@ const DashboardView = () => {
         {/* Row 4: Individual metric charts */}
         <MotionBox variants={fadeUp}>
           <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={4}>
-            <Panel title={t('realtime:ui.Temperature')} icon={<WiThermometer size={20} />}>
+            <Panel title={t('realtime:ui.Temperature')} icon={<WiThermometer size={20} />} variant="subtle">
               <TodaySingleChart keyName='temperature' label={t('realtime:ui.Temperature')} unit={'°C'} color={config.ui.chartColors[0]} />
             </Panel>
-            <Panel title={t('realtime:ui.Pressure')} icon={<WiBarometer size={20} />}>
+            <Panel title={t('realtime:ui.Pressure')} icon={<WiBarometer size={20} />} variant="subtle">
               <TodaySingleChart keyName='pressure' label={t('realtime:ui.Pressure')} unit={'hPa'} color={config.ui.chartColors[1]} />
             </Panel>
-            <Panel title={t('realtime:ui.RelativeHumidity')} icon={<WiHumidity size={20} />}>
+            <Panel title={t('realtime:ui.RelativeHumidity')} icon={<WiHumidity size={20} />} variant="subtle">
               <TodaySingleChart keyName='relative_humidity' label={t('realtime:ui.RelativeHumidity')} unit={'%'} color={config.ui.chartColors[2]} />
             </Panel>
-            <Panel title={t('realtime:ui.Rain')} icon={<WiRain size={20} />}>
+            <Panel title={t('realtime:ui.Rain')} icon={<WiRain size={20} />} variant="subtle">
               <TodaySingleChart keyName='rain' label={t('realtime:ui.Rain')} unit={'mm'} color={config.ui.chartColors[3]} type='area' />
             </Panel>
           </SimpleGrid>

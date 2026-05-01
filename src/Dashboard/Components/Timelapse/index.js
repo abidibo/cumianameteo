@@ -45,15 +45,15 @@ const sliderStyles = (isDark) => ({
       w: '14px',
       h: '14px',
       border: '1px solid',
-      borderColor: isDark ? 'rgba(16,185,129,0.5)' : 'rgba(5,150,105,0.4)',
-      bg: isDark ? '#0d1420' : '#f4f6f8',
-      boxShadow: isDark ? '0 0 6px rgba(16,185,129,0.3)' : '0 0 4px rgba(0,0,0,0.1)',
+      borderColor: isDark ? 'rgba(16,185,129,0.5)' : 'rgba(14,116,144,0.42)',
+      bg: isDark ? '#0d1420' : ComponentsTheme.panel.bg.light,
+      boxShadow: isDark ? '0 0 6px rgba(16,185,129,0.3)' : '0 0 5px rgba(14,116,144,0.14)',
     },
     '& .chakra-slider__filled-track': {
-      bg: isDark ? '#10B981' : '#059669',
+      bg: isDark ? '#10B981' : '#0E7490',
     },
     '& .chakra-slider__track': {
-      bg: isDark ? 'rgba(16,185,129,0.12)' : 'rgba(0,0,0,0.1)',
+      bg: isDark ? 'rgba(16,185,129,0.12)' : 'rgba(14,116,144,0.14)',
       h: '4px',
       borderRadius: '0',
     },
@@ -132,7 +132,7 @@ const Timelapse = ({ cover, imagesUrls }) => {
         <Text
           fontSize="11px"
           fontFamily={ComponentsTheme.fonts.data}
-          color={isDark ? 'gray.500' : 'gray.400'}
+          color={isDark ? 'gray.500' : '#647887'}
           letterSpacing="wider"
           flexShrink={0}
           minW="120px"
@@ -162,11 +162,11 @@ const Timelapse = ({ cover, imagesUrls }) => {
         <Tooltip
           label={t('dashboard:ui.TimelapseSpeed')}
           placement="top"
-          bg={isDark ? '#0d1420' : '#f4f6f8'}
-          color={isDark ? '#10B981' : '#059669'}
+          bg={isDark ? '#0d1420' : ComponentsTheme.panel.bg.light}
+          color={isDark ? '#10B981' : '#0E7490'}
           borderRadius="2px"
           border="1px solid"
-          borderColor={isDark ? 'rgba(16,185,129,0.2)' : 'rgba(0,0,0,0.1)'}
+          borderColor={isDark ? 'rgba(16,185,129,0.2)' : 'rgba(14,116,144,0.18)'}
           fontFamily={ComponentsTheme.fonts.data}
           fontSize="xs"
         >
@@ -189,10 +189,10 @@ const Timelapse = ({ cover, imagesUrls }) => {
               </SliderTrack>
               <Tooltip
                 hasArrow
-                bg={isDark ? '#0d1420' : '#f4f6f8'}
+                bg={isDark ? '#0d1420' : ComponentsTheme.panel.bg.light}
                 color={isDark ? '#F59E0B' : '#D97706'}
                 border="1px solid"
-                borderColor={isDark ? 'rgba(245,158,11,0.3)' : 'rgba(0,0,0,0.1)'}
+                borderColor={isDark ? 'rgba(245,158,11,0.3)' : 'rgba(217,119,6,0.22)'}
                 borderRadius="2px"
                 fontFamily={ComponentsTheme.fonts.data}
                 fontSize="xs"
@@ -210,11 +210,11 @@ const Timelapse = ({ cover, imagesUrls }) => {
         <Tooltip
           label={tooltipLabels[status]}
           placement="top"
-          bg={isDark ? '#0d1420' : '#f4f6f8'}
+          bg={isDark ? '#0d1420' : ComponentsTheme.panel.bg.light}
           color={isDark ? '#F59E0B' : '#D97706'}
           borderRadius="2px"
           border="1px solid"
-          borderColor={isDark ? 'rgba(245,158,11,0.3)' : 'rgba(0,0,0,0.1)'}
+          borderColor={isDark ? 'rgba(245,158,11,0.3)' : 'rgba(217,119,6,0.22)'}
           fontFamily={ComponentsTheme.fonts.data}
           fontSize="xs"
         >

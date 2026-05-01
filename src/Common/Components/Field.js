@@ -16,7 +16,7 @@ const Field = ({ isRequired, error, label, children }) => {
         textTransform="uppercase"
         letterSpacing="widest"
         fontWeight="600"
-        color={isDark ? '#10B981' : '#059669'}
+        color={isDark ? '#10B981' : '#0E7490'}
       >
         {label}
       </FormLabel>

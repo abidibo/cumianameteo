@@ -49,26 +49,26 @@ const Statistics = ({ data, keyName, unit, useSameKey, showTotal, extremes }) =>
       <TableContainer>
         <Table variant="unstyled" size="sm">
           <Thead>
-            <Tr borderBottom="1px solid" borderColor={isDark ? 'rgba(16,185,129,0.1)' : 'rgba(0,0,0,0.06)'}>
-              <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#059669'} fontSize="10px">{t('realtime:ui.Min')}</Th>
-              <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#059669'} fontSize="10px">{t('realtime:ui.Max')}</Th>
-              <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#059669'} fontSize="10px">{t('realtime:ui.Mean')}</Th>
-              {showTotal && <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#059669'} fontSize="10px">{t('realtime:ui.Total')}</Th>}
+            <Tr borderBottom="1px solid" borderColor={isDark ? 'rgba(16,185,129,0.1)' : 'rgba(14,116,144,0.13)'}>
+              <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#0E7490'} fontSize="10px">{t('realtime:ui.Min')}</Th>
+              <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#0E7490'} fontSize="10px">{t('realtime:ui.Max')}</Th>
+              <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#0E7490'} fontSize="10px">{t('realtime:ui.Mean')}</Th>
+              {showTotal && <Th fontFamily={ComponentsTheme.fonts.heading} letterSpacing="widest" textTransform="uppercase" color={isDark ? '#10B981' : '#0E7490'} fontSize="10px">{t('realtime:ui.Total')}</Th>}
             </Tr>
           </Thead>
           <Tbody>
             <Tr>
-              <Td color={isDark ? 'gray.300' : 'gray.700'}>
+              <Td color={isDark ? 'gray.300' : '#10202C'}>
                 {min} {unit} / {minDate}
               </Td>
-              <Td color={isDark ? 'gray.300' : 'gray.700'}>
+              <Td color={isDark ? 'gray.300' : '#10202C'}>
                 {max} {unit} / {maxDate}
               </Td>
-              <Td color={isDark ? 'gray.300' : 'gray.700'}>
+              <Td color={isDark ? 'gray.300' : '#10202C'}>
                 {mean} {unit}
               </Td>
               {showTotal && (
-                <Td color={isDark ? 'gray.300' : 'gray.700'}>
+                <Td color={isDark ? 'gray.300' : '#10202C'}>
                   {total} {unit}
                 </Td>
               )}

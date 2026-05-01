@@ -74,13 +74,13 @@ const DataHistoryView = () => {
     borderRadius: '2px',
     fontFamily: ComponentsTheme.fonts.data,
     fontSize: 'sm',
-    bg: isDark ? 'rgba(8,12,20,0.8)' : 'white',
-    borderColor: isDark ? 'rgba(16,185,129,0.2)' : 'rgba(0,0,0,0.15)',
-    color: isDark ? 'gray.200' : 'gray.700',
-    _hover: { borderColor: isDark ? 'rgba(16,185,129,0.4)' : 'rgba(0,0,0,0.3)' },
+    bg: isDark ? 'rgba(8,12,20,0.8)' : '#FFFFFF',
+    borderColor: isDark ? 'rgba(16,185,129,0.2)' : 'rgba(14,116,144,0.22)',
+    color: isDark ? 'gray.200' : '#10202C',
+    _hover: { borderColor: isDark ? 'rgba(16,185,129,0.4)' : 'rgba(14,116,144,0.38)' },
     _focus: {
-      borderColor: isDark ? '#10B981' : '#059669',
-      boxShadow: isDark ? '0 0 0 1px rgba(16,185,129,0.3)' : '0 0 0 1px rgba(5,150,105,0.3)',
+      borderColor: isDark ? '#10B981' : '#0E7490',
+      boxShadow: isDark ? '0 0 0 1px rgba(16,185,129,0.3)' : '0 0 0 1px rgba(14,116,144,0.3)',
     },
   }
 
@@ -90,7 +90,7 @@ const DataHistoryView = () => {
     textTransform: 'uppercase',
     letterSpacing: 'widest',
     fontWeight: '600',
-    color: isDark ? '#10B981' : '#059669',
+    color: isDark ? '#10B981' : '#0E7490',
   }
 
   const dateRangeLabel = (
@@ -98,7 +98,7 @@ const DataHistoryView = () => {
       as="span"
       fontFamily={ComponentsTheme.fonts.data}
       fontSize="xs"
-      color={isDark ? 'gray.500' : 'gray.400'}
+      color={isDark ? 'gray.500' : '#647887'}
       letterSpacing="wider"
     >
       {dayjs(extremes[0] * 1e3).format('YYYY-MM-DD HH:mm')} / {dayjs(extremes[1] * 1e3).format('YYYY-MM-DD HH:mm')}
@@ -115,19 +115,19 @@ const DataHistoryView = () => {
             gap={3}
             p={3}
             borderRadius="2px"
-            bg={isDark ? 'rgba(16,185,129,0.06)' : 'rgba(5,150,105,0.06)'}
+            bg={isDark ? 'rgba(16,185,129,0.06)' : 'rgba(14,116,144,0.07)'}
             border="1px solid"
-            borderColor={isDark ? 'rgba(16,185,129,0.12)' : 'rgba(5,150,105,0.12)'}
+            borderColor={isDark ? 'rgba(16,185,129,0.12)' : 'rgba(14,116,144,0.16)'}
             mb={4}
           >
-            <Box color={isDark ? '#10B981' : '#059669'} flexShrink={0}>
+            <Box color={isDark ? '#10B981' : '#0E7490'} flexShrink={0}>
               <IoInformationCircleOutline size={18} />
             </Box>
             <Text
               fontFamily={ComponentsTheme.fonts.data}
               fontSize="xs"
               letterSpacing="wider"
-              color={isDark ? 'gray.400' : 'gray.600'}
+              color={isDark ? 'gray.400' : '#526575'}
             >
               {t('realtime:ui.DataCollectedFrom')}
             </Text>

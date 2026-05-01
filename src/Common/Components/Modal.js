@@ -21,10 +21,10 @@ const Modal = ({ isOpen, onClose, overlay, title, submitLabel, onSubmit, childre
       {overlay && <ModalOverlay bg={isDark ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0.4)'} />}
       <ModalContent
         borderRadius="2px"
-        bg={isDark ? '#0d1420' : '#f4f6f8'}
+        bg={isDark ? '#0d1420' : ComponentsTheme.panel.bg.light}
         border="1px solid"
-        borderColor={isDark ? 'rgba(16,185,129,0.15)' : 'rgba(0,0,0,0.1)'}
-        boxShadow={isDark ? '0 8px 32px rgba(0,0,0,0.6)' : '0 8px 32px rgba(0,0,0,0.15)'}
+        borderColor={isDark ? 'rgba(16,185,129,0.15)' : ComponentsTheme.panel.border.light}
+        boxShadow={isDark ? '0 8px 32px rgba(0,0,0,0.6)' : '0 12px 36px rgba(15,39,55,0.16)'}
         _before={{
           content: '""',
           position: 'absolute',
@@ -32,7 +32,7 @@ const Modal = ({ isOpen, onClose, overlay, title, submitLabel, onSubmit, childre
           left: 0,
           right: 0,
           height: '2px',
-          background: 'linear-gradient(90deg, #10B981, transparent 60%)',
+          background: `linear-gradient(90deg, ${isDark ? '#10B981' : '#0E7490'}, transparent 60%)`,
         }}
         overflow="hidden"
       >
@@ -41,10 +41,10 @@ const Modal = ({ isOpen, onClose, overlay, title, submitLabel, onSubmit, childre
           fontSize="sm"
           textTransform="uppercase"
           letterSpacing="widest"
-          color={isDark ? '#10B981' : '#059669'}
-          bg={isDark ? 'rgba(16,185,129,0.04)' : 'rgba(0,0,0,0.03)'}
+          color={isDark ? '#10B981' : '#0E7490'}
+          bg={isDark ? 'rgba(16,185,129,0.04)' : ComponentsTheme.panel.heading.bg.light}
           borderBottom="1px solid"
-          borderColor={isDark ? 'rgba(16,185,129,0.1)' : 'rgba(0,0,0,0.06)'}
+          borderColor={isDark ? 'rgba(16,185,129,0.1)' : 'rgba(14,116,144,0.13)'}
           py={3}
         >
           {title}
@@ -52,7 +52,7 @@ const Modal = ({ isOpen, onClose, overlay, title, submitLabel, onSubmit, childre
         <ModalBody py={5}>{children}</ModalBody>
         <ModalFooter
           borderTop="1px solid"
-          borderColor={isDark ? 'rgba(16,185,129,0.08)' : 'rgba(0,0,0,0.06)'}
+          borderColor={isDark ? 'rgba(16,185,129,0.08)' : 'rgba(14,116,144,0.13)'}
         >
           <Button
             variant="ghost"
@@ -63,8 +63,8 @@ const Modal = ({ isOpen, onClose, overlay, title, submitLabel, onSubmit, childre
             fontSize="xs"
             letterSpacing="wider"
             textTransform="uppercase"
-            color={isDark ? 'gray.400' : 'gray.500'}
-            _hover={{ bg: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }}
+            color={isDark ? 'gray.400' : '#526575'}
+            _hover={{ bg: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(14,116,144,0.08)' }}
           >
             {t('actions.Cancel')}
           </Button>

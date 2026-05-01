@@ -18,7 +18,7 @@ const theme = extendTheme({
         background:
           props.colorMode === 'dark'
             ? 'radial-gradient(circle, rgba(16,185,129,0.06) 1px, transparent 1px) #080c14'
-            : 'radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px) #e8ecf0',
+            : 'radial-gradient(circle, rgba(14,116,144,0.08) 1px, transparent 1px) #E2ECF1',
         backgroundSize: '24px 24px',
         minHeight: '100vh',
       },

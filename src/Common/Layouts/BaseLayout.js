@@ -42,7 +42,7 @@ const BaseLayout = ({ children }) => {
       <GridItem
         bg={ComponentsTheme.footer.bg[colorMode]}
         borderTop="1px solid"
-        borderColor={colorMode === 'dark' ? 'rgba(16,185,129,0.1)' : 'rgba(0,0,0,0.06)'}
+        borderColor={colorMode === 'dark' ? 'rgba(16,185,129,0.1)' : 'rgba(14,116,144,0.14)'}
         area="footer"
         padding={0}
         alignItems="center"
@@ -51,7 +51,7 @@ const BaseLayout = ({ children }) => {
         fontFamily="'Share Tech Mono', monospace"
         fontSize="11px"
         letterSpacing="wider"
-        color={colorMode === 'dark' ? 'gray.500' : 'gray.500'}
+        color={colorMode === 'dark' ? 'gray.500' : '#647887'}
         textTransform="uppercase"
       >
         <Center margin={0}>

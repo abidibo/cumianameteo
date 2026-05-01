@@ -20,7 +20,7 @@ const TodayChart = () => {
   const theme = getChartTheme(colorMode)
 
   const makeYAxis = (titleText) =>
-    mergeChartOptions(theme.yAxis, { title: { text: titleText } })
+    mergeChartOptions(theme.yAxis, { showEmpty: false, title: { text: titleText } })
 
   let options = mergeChartOptions(theme, {
     chart: {
@@ -67,6 +67,7 @@ const TodayChart = () => {
         type: 'spline',
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.relative_humidity)]),
         dashStyle: 'Dash',
+        visible: false,
         zIndex: 3,
         tooltip: { valueSuffix: '%' },
       },
@@ -75,6 +76,7 @@ const TodayChart = () => {
         yAxis: 3,
         type: 'column',
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.rain_rate)]),
+        visible: false,
         zIndex: 1,
         tooltip: { valueSuffix: 'mm/h' },
       },
@@ -83,6 +85,7 @@ const TodayChart = () => {
         yAxis: 3,
         type: 'area',
         data: todayData.map((d) => [dayjs(d.datetime).valueOf(), parseFloat(d.rain)]),
+        visible: false,
         zIndex: 2,
         opacity: 0.3,
         tooltip: { valueSuffix: 'mm' },
